@@ -12,6 +12,7 @@ public class Mover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PrintInstruction();
     }
 
     // Update is called once per frame
@@ -22,5 +23,12 @@ public class Mover : MonoBehaviour
 
 
         transform.Translate(xValue,yValue,zValue);
+    }
+
+    void PrintInstruction()
+    {
+        Debug.Log("Welcome to The game");
+        Debug.Log("Move your player with WASD or Arrow Keys");
+        Debug.Log("Don't hit the wall!");
     }
 }
