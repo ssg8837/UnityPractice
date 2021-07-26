@@ -252,7 +252,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 1fd825d1f8c58ee48ae11f04ad71cf3f, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -351,6 +351,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelLoadDealy: 2
+  audioBoom: {fileID: 8300000, guid: 492c8bb548fd0b847a33446d295299c7, type: 3}
+  audioSuccess: {fileID: 8300000, guid: 593cabbc65c352246b07d39bf43d3242, type: 3}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -441,6 +443,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1061571252, guid: 344e389862b0bb845a1cf58bc2cd1098, type: 3}
+      propertyPath: mainEngine
+      value: 
+      objectReference: {fileID: 8300000, guid: 1fd825d1f8c58ee48ae11f04ad71cf3f, type: 3}
     - target: {fileID: 1061571252, guid: 344e389862b0bb845a1cf58bc2cd1098, type: 3}
       propertyPath: mainThrust
       value: 700

@@ -6,22 +6,28 @@ public class Movements : MonoBehaviour
 {
     [SerializeField] float mainThrust = 1000f;
     [SerializeField] float rotateThrust = 100f;
+    [SerializeField] AudioClip mainEngine;
+    [SerializeField] float audioVolume =0.5f;
     private Rigidbody rb;
     private Transform tr;
-    private AudioSource aS;
+    private AudioSource audioSource;
+    bool isAlive;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         tr = GetComponent<Transform>();
-        aS = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = audioVolume;
+        audioSource.clip = mainEngine;
+        audioSource.Play();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        aS.mute =true;
+        audioSource.mute =true;
         ProcessThrust();
         ProcessRotation();
     }
@@ -31,7 +37,7 @@ public class Movements : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             
-            aS.mute =false;
+            audioSource.mute =false;
             rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
             // if(!aS.isPlaying)
             //     aS.Play();

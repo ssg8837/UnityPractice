@@ -5,6 +5,15 @@ public class CollisionHandler : MonoBehaviour
 {
 
   [SerializeField] float levelLoadDealy = 2f;
+  [SerializeField] AudioClip audioBoom;
+  [SerializeField] AudioClip audioSuccess;
+   
+  private AudioSource oneShotAudioSource;
+
+  private void Start() 
+  {
+    oneShotAudioSource = GetComponent<AudioSource>();
+  }
 
   void OnCollisionEnter(Collision other) 
   {
@@ -15,10 +24,12 @@ public class CollisionHandler : MonoBehaviour
             break;
           case "Finish":
             Debug.Log("Finish");
+            oneShotAudioSource.PlayOneShot(audioSuccess);
             StartNextSequence();
             break;
           default:
             Debug.Log("Damage!");
+            oneShotAudioSource.PlayOneShot(audioBoom);
             StartCrashSequence();//ReloadLevel();
             break;
       }      
