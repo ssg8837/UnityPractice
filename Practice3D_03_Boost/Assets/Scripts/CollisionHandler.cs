@@ -10,6 +10,8 @@ public class CollisionHandler : MonoBehaviour
    
   private AudioSource oneShotAudioSource;
 
+  bool isTransitioning = false;
+
   private void Start() 
   {
     oneShotAudioSource = GetComponent<AudioSource>();
@@ -17,27 +19,31 @@ public class CollisionHandler : MonoBehaviour
 
   void OnCollisionEnter(Collision other) 
   {
-      switch (other.gameObject.tag)
-      {
-          case "Friendly":
-            Debug.Log("Friendly");
-            break;
-          case "Finish":
-            Debug.Log("Finish");
-            oneShotAudioSource.PlayOneShot(audioSuccess);
-            StartNextSequence();
-            break;
-          default:
-            Debug.Log("Damage!");
-            oneShotAudioSource.PlayOneShot(audioBoom);
-            StartCrashSequence();//ReloadLevel();
-            break;
-      }      
+    if(isTransitioning)
+    {
+      return ;
+    }
+    switch (other.gameObject.tag)
+    {
+      case "Friendly":
+        Debug.Log("Friendly");
+        break;
+      case "Finish":
+        Debug.Log("Finish");
+        StartNextSequence();
+        break;
+      default:
+        Debug.Log("Damage!");
+        StartCrashSequence();//ReloadLevel();
+        break;
+    }      
   }
 
   void StartCrashSequence()
   {
-    //todo add SFX when Crash
+    isTransitioning = true;
+    oneShotAudioSource.Stop();
+    oneShotAudioSource.PlayOneShot(audioBoom);
     //todo add Particle effect when Crash
     GetComponent<Movements>().enabled = false;
     Invoke("ReloadLevel", levelLoadDealy);
@@ -45,6 +51,10 @@ public class CollisionHandler : MonoBehaviour
 
   void StartNextSequence()
   {
+    isTransitioning = true;
+    oneShotAudioSource.Stop();
+    oneShotAudioSource.PlayOneShot(audioSuccess);
+    //todo add Particle effect when NextLevel
     GetComponent<Movements>().enabled = false;
     Invoke("LoadNextLevel", levelLoadDealy);
   }
