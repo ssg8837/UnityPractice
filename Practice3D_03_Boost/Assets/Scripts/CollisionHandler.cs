@@ -7,19 +7,39 @@ public class CollisionHandler : MonoBehaviour
   [SerializeField] float levelLoadDealy = 2f;
   [SerializeField] AudioClip audioBoom;
   [SerializeField] AudioClip audioSuccess;
+  [SerializeField] ParticleSystem sucessParticle;
+  [SerializeField] ParticleSystem explosionParticle;
    
   private AudioSource oneShotAudioSource;
 
   bool isTransitioning = false;
+  bool collisionCheck = true;
 
-  private void Start() 
-  {
-    oneShotAudioSource = GetComponent<AudioSource>();
-  }
+  private void Start()
+    {
+        oneShotAudioSource = GetComponent<AudioSource>();
+    }
 
-  void OnCollisionEnter(Collision other) 
+    private void Update() 
+    {
+      GetSpecialKey();
+    }
+
+    private void GetSpecialKey()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadNextLevel();
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            collisionCheck = !collisionCheck;
+        }
+    }
+
+    void OnCollisionEnter(Collision other) 
   {
-    if(isTransitioning)
+    if(isTransitioning || !collisionCheck)
     {
       return ;
     }
@@ -44,7 +64,7 @@ public class CollisionHandler : MonoBehaviour
     isTransitioning = true;
     oneShotAudioSource.Stop();
     oneShotAudioSource.PlayOneShot(audioBoom);
-    //todo add Particle effect when Crash
+    explosionParticle.Play();
     GetComponent<Movements>().enabled = false;
     Invoke("ReloadLevel", levelLoadDealy);
   }
@@ -54,7 +74,7 @@ public class CollisionHandler : MonoBehaviour
     isTransitioning = true;
     oneShotAudioSource.Stop();
     oneShotAudioSource.PlayOneShot(audioSuccess);
-    //todo add Particle effect when NextLevel
+    sucessParticle.Play();
     GetComponent<Movements>().enabled = false;
     Invoke("LoadNextLevel", levelLoadDealy);
   }

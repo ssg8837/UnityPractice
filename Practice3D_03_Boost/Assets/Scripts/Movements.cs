@@ -8,6 +8,9 @@ public class Movements : MonoBehaviour
     [SerializeField] float rotateThrust = 100f;
     [SerializeField] AudioClip mainEngine;
     [SerializeField] float audioVolume =0.5f;
+    [SerializeField] ParticleSystem mainJetParticle;
+    [SerializeField] ParticleSystem leftJetParticle;
+    [SerializeField] ParticleSystem rightJetParticle;
     private Rigidbody rb;
     private Transform tr;
     private AudioSource audioSource;
@@ -39,26 +42,42 @@ public class Movements : MonoBehaviour
             
             audioSource.mute =false;
             rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
-            // if(!aS.isPlaying)
-            //     aS.Play();
+            if(!mainJetParticle.isPlaying)
+            {
+                mainJetParticle.Play();
+            }
         }
-        // else
-        //     aS.Stop();
+         else
+         {
+             mainJetParticle.Stop();
+         }
     }
 
     private void ProcessRotation()
     {
         if (Input.GetKey(KeyCode.D))
         {
-            rb.freezeRotation = true;
-            tr.Rotate(Vector3.forward * rotateThrust * Time.deltaTime);
-            rb.freezeRotation = false;
+            rocketRotate(leftJetParticle, Vector3.forward);
         }
-        else  if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
         {
-            rb.freezeRotation = true;
-            tr.Rotate(Vector3.back * rotateThrust * Time.deltaTime);
-            rb.freezeRotation = false;
+            rocketRotate(rightJetParticle, Vector3.back);
         }
+        else
+        {
+            leftJetParticle.Stop();
+            rightJetParticle.Stop();
+        }
+    }
+
+    private void rocketRotate(ParticleSystem particleSystem, Vector3 vector3)
+    {
+        if (!particleSystem.isPlaying)
+        {
+            particleSystem.Play();
+        }
+        rb.freezeRotation = true;
+        tr.Rotate(vector3 * rotateThrust * Time.deltaTime);
+        rb.freezeRotation = false;
     }
 }
