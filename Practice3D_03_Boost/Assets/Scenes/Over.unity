@@ -718,7 +718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementVector: {x: 8, y: 0, z: 1}
-  movementFactor: 0.425
+  period: 0
 --- !u!4 &679694812 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6356661501988287179, guid: ad7c8d86fcb040341970e7c120d1c755, type: 3}
