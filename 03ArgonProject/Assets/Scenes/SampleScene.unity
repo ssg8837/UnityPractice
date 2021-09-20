@@ -606,6 +606,14 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1525890101, guid: de1c47d64229c4f4bbe17cdea111f17c, type: 3}
+      propertyPath: controlRawFactor
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525890101, guid: de1c47d64229c4f4bbe17cdea111f17c, type: 3}
+      propertyPath: positionPitchFactor
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525890101, guid: de1c47d64229c4f4bbe17cdea111f17c, type: 3}
       propertyPath: movement.m_SingletonActionBindings.Array.size
       value: 6
       objectReference: {fileID: 0}
