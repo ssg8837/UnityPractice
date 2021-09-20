@@ -601,6 +601,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 242290282}
     m_Modifications:
+    - target: {fileID: 1525890101, guid: de1c47d64229c4f4bbe17cdea111f17c, type: 3}
+      propertyPath: xRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525890101, guid: de1c47d64229c4f4bbe17cdea111f17c, type: 3}
+      propertyPath: movement.m_SingletonActionBindings.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525890101, guid: de1c47d64229c4f4bbe17cdea111f17c, type: 3}
+      propertyPath: movement.m_SingletonActionBindings.Array.data[5].m_Id
+      value: 33d62a08-66d0-4b11-b1b7-243c4ce5a10b
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525890101, guid: de1c47d64229c4f4bbe17cdea111f17c, type: 3}
+      propertyPath: movement.m_SingletonActionBindings.Array.data[5].m_Name
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525890101, guid: de1c47d64229c4f4bbe17cdea111f17c, type: 3}
+      propertyPath: movement.m_SingletonActionBindings.Array.data[5].m_Path
+      value: <Gamepad>/leftStick
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525890101, guid: de1c47d64229c4f4bbe17cdea111f17c, type: 3}
+      propertyPath: movement.m_SingletonActionBindings.Array.data[5].m_Flags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5433514217631909320, guid: de1c47d64229c4f4bbe17cdea111f17c, type: 3}
       propertyPath: m_Name
       value: PlayerShip
