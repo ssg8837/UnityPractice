@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -14,13 +16,28 @@ public class PlayerControls : MonoBehaviour
     [SerializeField] private float positionYawFactor = 3f;
     [SerializeField] private float controlRawFactor = -20f;
     
+    [SerializeField] private InputAction fire;
+    [SerializeField] private InputAction movement;
+    [SerializeField] private ParticleSystem[] lasers; 
+
     private float xThrow, yThrow;
+    private void OnEnable() 
+    {
+        fire.Enable();
+        movement.Enable();
+    }
+
+    private void OnDisable() 
+    {
+         fire.Disable();
+         movement.Disable();
+    }
     // Update is called once per frame
     void Update()
     {
         ProcessTranslation();
         ProcessRotaion();
-
+        ProcessFiring();
     }
 
     private void ProcessRotaion()
@@ -37,8 +54,9 @@ public class PlayerControls : MonoBehaviour
 
     private void ProcessTranslation()
     {
-        xThrow = Input.GetAxis("Horizontal");
-        yThrow = Input.GetAxis("Vertical");
+        Vector2 vector2 = movement.ReadValue<Vector2>();
+        xThrow = vector2.x;
+        yThrow = vector2.y;
 
         float xOffset = xThrow * Time.deltaTime * moveSpeed;
         float rawXPos = transform.localPosition.x + xOffset;
@@ -50,4 +68,29 @@ public class PlayerControls : MonoBehaviour
 
         transform.localPosition = new Vector3(clampedXPos, clampedYPos, transform.localPosition.z);
     }
+
+    private void ProcessFiring()
+    {
+        //if(Input.GetKeyDown(KeyCode.Space))
+        // if(Input.GetButton("Fire1"))
+        if(fire.ReadValue<float>() > 0.5)
+        {
+            ActiveLasers(true);
+        }
+        else
+        {
+            ActiveLasers(false);
+        }
+
+    }
+
+    private void ActiveLasers(Boolean isActive)
+    {
+        foreach (ParticleSystem oneLaser in lasers)
+        {
+            var emissionModule= oneLaser.emission;
+            emissionModule.enabled = isActive;
+        }
+    }
+
 }
