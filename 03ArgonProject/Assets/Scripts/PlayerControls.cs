@@ -6,18 +6,25 @@ using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
+    [Header("General Setup Settings")]
+    [Tooltip("How fast ship moves up and down based on player input")]
     [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private float xRange = 5f;
-    [SerializeField] private float yRange = 4f;
+    [Tooltip("Left Right Position Limit")][SerializeField] private float xRange = 5f;
+    [Tooltip("Up Down Position Limit")][SerializeField] private float yRange = 4f;
 
+
+    [Header("Screen Position based tuning")]
     [SerializeField] private float positionPitchFactor = -3f;
     [SerializeField] private float controlPitchFactor = -10f;
 
+    [Header("Player input based tuning")]
     [SerializeField] private float positionYawFactor = 3f;
     [SerializeField] private float controlRawFactor = -20f;
     
+    [Header("Input System")]
     [SerializeField] private InputAction fire;
     [SerializeField] private InputAction movement;
+    [Header("For Paticle Check")]
     [SerializeField] private ParticleSystem[] lasers; 
 
     private float xThrow, yThrow;
