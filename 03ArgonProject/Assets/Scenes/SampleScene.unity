@@ -611,7 +611,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathVfx: {fileID: 5295731925353685175, guid: 0d6b56e2f4c7c92489b50dc105ea0c8f, type: 3}
+  hitVfx: {fileID: 5295731925353685175, guid: 07bbcaea3d86c9a4681026ad7575f225, type: 3}
   parent: {fileID: 158078003}
+  HealthPoint: 3
 --- !u!65 &727382194
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1165,7 +1167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathVfx: {fileID: 5295731925353685175, guid: 0d6b56e2f4c7c92489b50dc105ea0c8f, type: 3}
+  hitVfx: {fileID: 5295731925353685175, guid: 07bbcaea3d86c9a4681026ad7575f225, type: 3}
   parent: {fileID: 158078003}
+  HealthPoint: 3
 --- !u!1 &1267251657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,7 +1283,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathVfx: {fileID: 5295731925353685175, guid: 0d6b56e2f4c7c92489b50dc105ea0c8f, type: 3}
+  hitVfx: {fileID: 5295731925353685175, guid: 07bbcaea3d86c9a4681026ad7575f225, type: 3}
   parent: {fileID: 158078003}
+  HealthPoint: 3
 --- !u!65 &1361060170
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1454,7 +1460,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathVfx: {fileID: 5295731925353685175, guid: 0d6b56e2f4c7c92489b50dc105ea0c8f, type: 3}
+  hitVfx: {fileID: 5295731925353685175, guid: 07bbcaea3d86c9a4681026ad7575f225, type: 3}
   parent: {fileID: 158078003}
+  HealthPoint: 3
 --- !u!65 &1784994865
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1578,7 +1586,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathVfx: {fileID: 5295731925353685175, guid: 0d6b56e2f4c7c92489b50dc105ea0c8f, type: 3}
+  hitVfx: {fileID: 5295731925353685175, guid: 07bbcaea3d86c9a4681026ad7575f225, type: 3}
   parent: {fileID: 158078003}
+  HealthPoint: 3
 --- !u!65 &1794288298
 BoxCollider:
   m_ObjectHideFlags: 0
