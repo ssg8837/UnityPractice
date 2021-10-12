@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4050066245165196276, guid: 8c7e47afbec30224e9f8b8b6f3ed2611, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4050066245165196276, guid: 8c7e47afbec30224e9f8b8b6f3ed2611, type: 3}
       propertyPath: m_LocalPosition.x
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 158078003}
   m_Layer: 0
   m_Name: SpawnAtRuntime
-  m_TagString: Untagged
+  m_TagString: SpawnAtRuntime
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -471,7 +471,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5752927294461688649, guid: 0de4fd24fc471cb459cb3e5b1be71df9, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5752927294461688649, guid: 0de4fd24fc471cb459cb3e5b1be71df9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -532,7 +532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4050066245165196276, guid: 8c7e47afbec30224e9f8b8b6f3ed2611, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4050066245165196276, guid: 8c7e47afbec30224e9f8b8b6f3ed2611, type: 3}
       propertyPath: m_LocalPosition.x
@@ -682,7 +682,7 @@ PrefabInstance:
       objectReference: {fileID: 158078003}
     - target: {fileID: 1352369020452087234, guid: fdc177e353e267f4b9392cbcee26e2e4, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1352369020452087234, guid: fdc177e353e267f4b9392cbcee26e2e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1088,7 +1088,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathVfx: {fileID: 5295731925353685175, guid: 0d6b56e2f4c7c92489b50dc105ea0c8f, type: 3}
   hitVfx: {fileID: 5295731925353685175, guid: 07bbcaea3d86c9a4681026ad7575f225, type: 3}
-  parent: {fileID: 158078003}
   HealthPoint: 1
 --- !u!1 &1267251657
 GameObject:
@@ -1256,7 +1255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 813731502081836123, guid: 48cab7e654c8b024685fd683f59e73a4, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 813731502081836123, guid: 48cab7e654c8b024685fd683f59e73a4, type: 3}
       propertyPath: m_LocalPosition.x

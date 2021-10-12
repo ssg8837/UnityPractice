@@ -6,19 +6,27 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] GameObject deathVfx;
     [SerializeField] GameObject hitVfx;
-    [SerializeField] Transform parent;
+    // [SerializeField] Transform parent;
 
     [SerializeField] private int HealthPoint = 3;
 
     private Rigidbody EnemyRigidbody;
+    private Transform parent;
 
-    private void Start() 
+    private void Start()
     {
-        scoreBoard = FindObjectOfType<ScoreBoard>();   
-        EnemyRigidbody = gameObject.AddComponent<Rigidbody>(); 
+        scoreBoard = FindObjectOfType<ScoreBoard>();
+        parent = GameObject.FindWithTag("SpawnAtRuntime").transform;
+        AddRigidBody();
+    }
+
+    private void AddRigidBody()
+    {
+        EnemyRigidbody = gameObject.AddComponent<Rigidbody>();
         EnemyRigidbody.useGravity = false;
         EnemyRigidbody.isKinematic = true;
     }
+
     ScoreBoard scoreBoard;
     private void OnParticleCollision(GameObject other)
     {
