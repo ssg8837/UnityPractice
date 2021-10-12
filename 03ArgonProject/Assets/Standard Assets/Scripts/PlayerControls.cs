@@ -9,7 +9,7 @@ public class PlayerControls : MonoBehaviour
     [Header("General Setup Settings")]
     [Tooltip("How fast ship moves up and down based on player input")]
     [SerializeField] private float moveSpeed = 10f;
-    [Tooltip("Left Right Position Limit")][SerializeField] private float xRange = 5f;
+    [Tooltip("Left Right Position Limit")][SerializeField] private float xRange = 6f;
     [Tooltip("Up Down Position Limit")][SerializeField] private float yRange = 4f;
 
 

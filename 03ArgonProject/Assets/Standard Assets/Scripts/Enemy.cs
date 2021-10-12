@@ -10,9 +10,14 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private int HealthPoint = 3;
 
+    private Rigidbody EnemyRigidbody;
+
     private void Start() 
     {
-        scoreBoard = FindObjectOfType<ScoreBoard>();    
+        scoreBoard = FindObjectOfType<ScoreBoard>();   
+        EnemyRigidbody = gameObject.AddComponent<Rigidbody>(); 
+        EnemyRigidbody.useGravity = false;
+        EnemyRigidbody.isKinematic = true;
     }
     ScoreBoard scoreBoard;
     private void OnParticleCollision(GameObject other)

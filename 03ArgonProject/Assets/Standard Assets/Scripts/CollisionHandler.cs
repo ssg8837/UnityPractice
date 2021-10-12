@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
@@ -26,7 +27,7 @@ public class CollisionHandler : MonoBehaviour
         GetComponent<MeshRenderer>().enabled = false;
         explosionParticle.Play();
         // 컨트롤 비활성화
-        GetComponent<PlayerControls>().enabled = false;
+        InputSystem.DisableAllEnabledActions();
         GetComponent<BoxCollider>().enabled = false;
         // 1초후 Invoke 판단하여 실행
         Invoke("ReloadLevel", loadDelay);
