@@ -35,6 +35,6 @@ public class CoordinateLabeler : MonoBehaviour
     }
     private void UpdateObjectNames()
     {
-        transform.parent.name = label.text;
+        transform.parent.name = string.Format("({0})",label.text);
     }
 }
