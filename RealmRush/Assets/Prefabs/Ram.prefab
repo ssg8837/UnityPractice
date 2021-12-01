@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1235683833724702634}
   m_Layer: 0
-  m_Name: Enemy
-  m_TagString: Untagged
+  m_Name: Ram
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

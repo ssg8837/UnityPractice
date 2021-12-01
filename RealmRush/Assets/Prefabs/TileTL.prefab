@@ -27,9 +27,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 270
       objectReference: {fileID: 0}
+    - target: {fileID: 1850301815578696409, guid: 174b93fe30a383942bbb3abdb3bc342b, type: 3}
+      propertyPath: isPlaceable
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2107358063488441225, guid: 174b93fe30a383942bbb3abdb3bc342b, type: 3}
       propertyPath: m_Name
-      value: (0,0)
+      value: TileTL
       objectReference: {fileID: 0}
     - target: {fileID: 6382023827954033874, guid: 174b93fe30a383942bbb3abdb3bc342b, type: 3}
       propertyPath: m_RootOrder

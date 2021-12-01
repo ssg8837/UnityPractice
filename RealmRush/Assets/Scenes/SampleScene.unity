@@ -860,7 +860,7 @@ Transform:
   - {fileID: 118160286}
   - {fileID: 98899380}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &487072402 stripped
 Transform:
@@ -1329,7 +1329,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1001 &715608488
 PrefabInstance:
@@ -1844,6 +1844,7 @@ MonoBehaviour:
   - {fileID: 315410030}
   - {fileID: 331034135}
   - {fileID: 293771696}
+  speed: 1
 --- !u!1001 &1279246690
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2463,7 +2464,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1235683833724702634, guid: e1a06d609fd64144fbf67670ec1fcafe, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1235683833724702634, guid: e1a06d609fd64144fbf67670ec1fcafe, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2475,7 +2476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1235683833724702634, guid: e1a06d609fd64144fbf67670ec1fcafe, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1235683833724702634, guid: e1a06d609fd64144fbf67670ec1fcafe, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2519,7 +2520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8355948976625381271, guid: e1a06d609fd64144fbf67670ec1fcafe, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Ram
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1a06d609fd64144fbf67670ec1fcafe, type: 3}
