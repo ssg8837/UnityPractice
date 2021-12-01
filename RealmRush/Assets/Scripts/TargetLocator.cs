@@ -12,7 +12,6 @@ public class TargetLocator : MonoBehaviour
     void Start()
     {
         enemy = GameObject.FindWithTag("Enemy"); 
-        Debug.Log(enemy.name);
     }
 
     // Update is called once per frame
@@ -22,6 +21,6 @@ public class TargetLocator : MonoBehaviour
     }
     private void AimWeapon()
     {
-        weapon.transform.LookAt(enemy.transform);
+        weapon.LookAt(enemy.transform);
     }
 }
