@@ -5,22 +5,52 @@ using UnityEngine;
 public class TargetLocator : MonoBehaviour
 {
     [SerializeField] Transform weapon;
-    [SerializeField] Transform target;
+    Transform target;
+    float tragetDistacne;
+    //사거리
+    [SerializeField] float range = 15f;
+    [SerializeField] ParticleSystem weaponParticle;
+     
     // Start is called before the first frame update
 
-    GameObject enemy;
-    void Start()
-    {
-        enemy = GameObject.FindWithTag("Enemy"); 
-    }
+    GameObject targetEnemy;
 
     // Update is called once per frame
     void Update()
     {
+        FindClosestTarget();
         AimWeapon();
     }
+
+    private void FindClosestTarget()
+    {
+        GameObject[] enemise = GameObject.FindGameObjectsWithTag("Enemy");
+        Transform closestTarget = null;
+        tragetDistacne = Mathf.Infinity;
+
+        foreach(GameObject enemy in enemise)
+        {
+            float enemyDistance = Vector3.Distance(transform.position, enemy.transform.position);
+
+            if( enemyDistance < tragetDistacne)
+            {
+                closestTarget = enemy.transform;
+                tragetDistacne = enemyDistance;
+                targetEnemy = enemy;
+            }
+        }
+    }
+
     private void AimWeapon()
     {
-        weapon.LookAt(enemy.transform);
+        if(tragetDistacne < range)
+        {
+            weapon.LookAt(targetEnemy.transform);
+            weaponParticle.Play();
+        }
+        else
+        {
+            weaponParticle.Stop();
+        }
     }
 }

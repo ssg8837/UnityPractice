@@ -10,11 +10,31 @@ public class EnemyMoves : MonoBehaviour
     [SerializeField] [Range(0f, 5f)] float speed = 1f; 
     void Start()
     {
+        FindPath();
+        ReturnToStart();
         StartCoroutine(FollowPath());
+    }
+    
+    private void FindPath()
+    {
+        path.Clear();
+
+        GameObject[] wayPoints = GameObject.FindGameObjectsWithTag("Paths");
+
+        foreach(GameObject wayPoint in wayPoints)
+        {
+            //
+            path.Add(wayPoint.GetComponent<WayPoint>());
+        }
+    }
+
+    private void ReturnToStart()
+    {
+        transform.position = path[0].transform.position;
     }
 
    IEnumerator FollowPath()
-    {
+    {                
         foreach(WayPoint wayPoint in path)
         {
             //시작점
@@ -35,6 +55,9 @@ public class EnemyMoves : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
+
+        ReturnToStart();
+        gameObject.SetActive(false);
     }
     // // Update is called once per frame
     // void Update()

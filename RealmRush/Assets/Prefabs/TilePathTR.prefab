@@ -35,6 +35,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TilePathTR
       objectReference: {fileID: 0}
+    - target: {fileID: 2049390805587943735, guid: cb676a2b44b52594fa87091b1d3928de, type: 3}
+      propertyPath: m_TagString
+      value: Paths
+      objectReference: {fileID: 0}
     - target: {fileID: 4144441891257154609, guid: cb676a2b44b52594fa87091b1d3928de, type: 3}
       propertyPath: m_Mesh
       value: 
