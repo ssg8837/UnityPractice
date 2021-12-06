@@ -11,8 +11,6 @@ public class ObjectPools : MonoBehaviour
     //적 집합
     GameObject[] pool;
  
-    int spawnEnemeyCounter = 0;
-
     private void Awake() 
     {
         PopulatedPool();
@@ -40,22 +38,28 @@ public class ObjectPools : MonoBehaviour
     {
         while(true)
         {
-            ActiveEnemy();
+            EnableObjectInPool();
             //IEnumerator메소드에서 리턴하기 위해 yield, 초를 알리기 위해 WaitForSeconds를 사용.
             yield return new WaitForSeconds(spawnTimer);
         }
     }
 
-    private void ActiveEnemy()
+    private void EnableObjectInPool()
     {
-            //적 오브젝트 생성
-            // Instantiate(enemyPrefabs, transform);
-            pool[spawnEnemeyCounter].SetActive(true);
-            spawnEnemeyCounter ++;
-            if(spawnEnemeyCounter == poolSize)
+        //적 오브젝트 생성
+        // Instantiate(enemyPrefabs, transform);
+
+        //비활성화 된 애들 찾아서 순서대로 활성화 시킴
+        for(int i = 0; i < poolSize; i++)
+        {
+            //활성화 되어있는가? 비활성화시
+            if(pool[i].activeInHierarchy == false)
             {
-                spawnEnemeyCounter = 0;
+                pool[i].SetActive(true);
+                //그만 찾고 활성화 시킴
+                return;
             }
+        }
     }
 
 }

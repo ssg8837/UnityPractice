@@ -5,14 +5,20 @@ using UnityEngine;
 
 public class EnemyMoves : MonoBehaviour
 {
+    Enemy enemy;
     [SerializeField] List<WayPoint> path = new List<WayPoint>();
     // Start is called before the first frame update
     [SerializeField] [Range(0f, 5f)] float speed = 1f; 
-    void Start()
+    private void OnEnable() 
     {
         FindPath();
         ReturnToStart();
         StartCoroutine(FollowPath());
+    }
+
+    private void Start() 
+    {
+        enemy = GetComponent<Enemy>();
     }
     
     private void FindPath()
@@ -34,7 +40,7 @@ public class EnemyMoves : MonoBehaviour
     }
 
    IEnumerator FollowPath()
-    {                
+    {         
         foreach(WayPoint wayPoint in path)
         {
             //시작점
@@ -55,7 +61,7 @@ public class EnemyMoves : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
-
+        enemy.SteaGold();
         ReturnToStart();
         gameObject.SetActive(false);
     }

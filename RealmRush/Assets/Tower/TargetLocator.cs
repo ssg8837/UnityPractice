@@ -43,14 +43,20 @@ public class TargetLocator : MonoBehaviour
 
     private void AimWeapon()
     {
+        weapon.LookAt(targetEnemy.transform);
         if(tragetDistacne < range)
         {
-            weapon.LookAt(targetEnemy.transform);
-            weaponParticle.Play();
+            Attack(targetEnemy);
         }
         else
         {
-            weaponParticle.Stop();
+            Attack(false);
         }
+    }
+
+    private void Attack(bool isAlive)
+    {   
+        var emissionModule= weaponParticle.emission;
+        emissionModule.enabled = isAlive;
     }
 }

@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    Enemy enemy;
+
     [SerializeField] int maxHitPoints;
     int currentHitPoints;
     // Start is called before the first frame update
-    void Start()
+    private void OnEnable() 
     {
         currentHitPoints = maxHitPoints;
+    }
+
+    private void Start() 
+    {
+        enemy = GetComponent<Enemy>();
     }
 
     private void OnParticleCollision(GameObject other) 
@@ -27,6 +34,7 @@ public class EnemyHealth : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
+            enemy.RewardGold();
         }
     }
 }
