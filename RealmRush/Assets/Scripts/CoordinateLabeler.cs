@@ -13,7 +13,15 @@ public class CoordinateLabeler : MonoBehaviour
     private void Awake() 
     {
         label = GetComponent<TextMeshPro>();
-        DisPlayCoordinates();
+        
+        if(!Application.isPlaying)
+        {
+            DisPlayCoordinates();
+        }
+        else
+        {
+            label.enabled = false;
+        }
 
     }
     // Update is called once per frame
