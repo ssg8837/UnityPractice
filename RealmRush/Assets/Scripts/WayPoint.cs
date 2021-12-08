@@ -5,7 +5,7 @@ using UnityEngine;
 public class WayPoint : MonoBehaviour
 {
     [SerializeField] Tower towerPrefab;
-    [SerializeField] bool isPlaceable;
+    [SerializeField] public bool isPlaceable;
 
     //마우스가 올려져 있을 때
     // private void OnMouseOver() 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[RequireComponent(typeof(Enemy))]
 public class EnemyMoves : MonoBehaviour
 {
     Enemy enemy;
@@ -25,12 +25,16 @@ public class EnemyMoves : MonoBehaviour
     {
         path.Clear();
 
-        GameObject[] wayPoints = GameObject.FindGameObjectsWithTag("Paths");
+        GameObject parent = GameObject.FindGameObjectWithTag("Paths");
 
-        foreach(GameObject wayPoint in wayPoints)
+        foreach(Transform child in parent.transform)
         {
-            //
-            path.Add(wayPoint.GetComponent<WayPoint>());
+            WayPoint wayPoint = child.GetComponent<WayPoint>();
+
+            if(wayPoint != null)
+            {
+                path.Add(wayPoint);
+            }
         }
     }
 
