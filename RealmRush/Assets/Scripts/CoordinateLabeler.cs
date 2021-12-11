@@ -17,7 +17,14 @@ public class CoordinateLabeler : MonoBehaviour
     private void Awake() 
     {
         label = GetComponent<TextMeshPro>();
-        label.enabled = false;
+        if(Application.isPlaying)
+        {
+            label.enabled = false;
+        }
+        else
+        {
+            label.enabled = true;
+        }
         wayPoint = GetComponentInParent<WayPoint>();
         DisPlayCoordinates();
 
@@ -62,7 +69,7 @@ public class CoordinateLabeler : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.C))
         {
-            label.enabled = !label.IsActive();
+            label.enabled = !label.enabled;
         }
     }
 }
