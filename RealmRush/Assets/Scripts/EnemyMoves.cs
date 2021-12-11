@@ -66,7 +66,6 @@ public class EnemyMoves : MonoBehaviour
             }
         }
         enemy.SteaGold();
-        ReturnToStart();
         gameObject.SetActive(false);
     }
     // // Update is called once per frame
