@@ -1893,6 +1893,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4466469300072324495, guid: bdd889054a0abfe41a2bd212327d28e0, type: 3}
+      propertyPath: defaultColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466469300072324495, guid: bdd889054a0abfe41a2bd212327d28e0, type: 3}
+      propertyPath: defaultColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4466469300072324495, guid: bdd889054a0abfe41a2bd212327d28e0, type: 3}
+      propertyPath: defaultColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6129880343227974453, guid: bdd889054a0abfe41a2bd212327d28e0, type: 3}
       propertyPath: m_Name
       value: (-1,1)
@@ -3997,7 +4009,7 @@ GameObject:
   - component: {fileID: 757228986}
   - component: {fileID: 757228985}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GridManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4015,11 +4027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84088433a671e8409e232c3f7509c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  node:
-    coordinates: {x: 2, y: 1}
-    isWalkable: 0
-    isExplored: 0
-    isPath: 0
+  gridSize: {x: 4, y: 3}
 --- !u!4 &757228986
 Transform:
   m_ObjectHideFlags: 0
@@ -4028,7 +4036,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 757228984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.0518913, y: -1299.2305, z: 664.9435}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

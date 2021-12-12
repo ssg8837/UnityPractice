@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: -3505752445956418255, guid: e676f3963f3103d43804cbd1237e84e8, type: 3}
   isPlaceable: 1
+  towerY: 0
 --- !u!65 &1740255682501096477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72,7 +73,7 @@ GameObject:
   - component: {fileID: 8840602012206549233}
   - component: {fileID: 5415179256804923859}
   - component: {fileID: 2820897540543801355}
-  - component: {fileID: 8402948949324480397}
+  - component: {fileID: 6619624093681334358}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -232,7 +233,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
---- !u!114 &8402948949324480397
+--- !u!114 &6619624093681334358
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,9 +245,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1ec1106c2975149a3a7c2b18866290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultColor: {r: 0, g: 0, b: 0, a: 1}
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
   blockedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  wayPoint: {fileID: 1793461075792486503}
+  exploredColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pathColor: {r: 1, g: 0.5, b: 0, a: 1}
 --- !u!1 &5794246159633081524
 GameObject:
   m_ObjectHideFlags: 0

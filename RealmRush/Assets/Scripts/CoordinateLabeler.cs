@@ -4,14 +4,17 @@ using UnityEngine;
 using TMPro;
 
 //언제나 실행
-[ExecuteAlways]
 [RequireComponent(typeof(TextMeshPro))]
+[ExecuteAlways]
 public class CoordinateLabeler : MonoBehaviour
 {
-    [SerializeField] Color defaultColor = Color.black;
+    [SerializeField] Color defaultColor = Color.white;
     [SerializeField] Color blockedColor = Color.gray;
+    [SerializeField] Color exploredColor = Color.yellow;
+    [SerializeField] Color pathColor = new Color(1f, 0.5f, 0f);
     TextMeshPro label;
-    WayPoint wayPoint;
+    //WayPoint wayPoint;
+    GridManager gridManager;
     Vector2Int coordinates = new Vector2Int();
 
     private void Awake() 
@@ -25,7 +28,8 @@ public class CoordinateLabeler : MonoBehaviour
         {
             label.enabled = true;
         }
-        wayPoint = GetComponentInParent<WayPoint>();
+        //wayPoint = GetComponentInParent<WayPoint>();
+        gridManager = FindObjectOfType<GridManager>();
         DisPlayCoordinates();
 
     }
@@ -53,16 +57,45 @@ public class CoordinateLabeler : MonoBehaviour
         transform.parent.name = string.Format("({0})",label.text);
     }
 
-    void SetLabelColor()
+    private void SetLabelColor()
     {
-        if(wayPoint.isPlaceable)
+        if(gridManager == null)
         {
-            label.color = defaultColor;
+            return;
         }
-        else
+
+        Node node = gridManager.GetNode(coordinates);
+        
+        if(node == null)
+        {
+            return;
+        }
+                
+        if(!node.isWalkable)
         {
             label.color = blockedColor;
         }
+        else if(node.isExplored)
+        {
+            label.color = exploredColor;
+        }
+        else if(node.isPath)
+        {
+            label.color = pathColor;
+        }
+        else
+        {
+            label.color = defaultColor;
+        }
+
+        // if(wayPoint.isPlaceable)
+        // {
+        //     label.color = defaultColor;
+        // }
+        // else
+        // {
+        //     label.color = blockedColor;
+        // }
     }
 
     private void ToggleLabels()
