@@ -7,6 +7,18 @@ public class GridManager : MonoBehaviour
     [SerializeField] Vector2Int gridSize;
     Dictionary<Vector2Int,Node> grid = new Dictionary<Vector2Int, Node>();
 
+    public Dictionary<Vector2Int, Node> Grid
+    {
+        get
+        {
+            return grid;
+        }
+        set
+        {
+            grid = value;
+        }
+    }
+
     private void Awake() 
     {
         CreateGrid();
