@@ -71,17 +71,17 @@ public class CoordinateLabeler : MonoBehaviour
             return;
         }
                 
-        if(!node.isWalkable)
+        if(node.isPath)
         {
-            label.color = blockedColor;
+            label.color = pathColor;
         }
         else if(node.isExplored)
         {
             label.color = exploredColor;
         }
-        else if(node.isPath)
+        else if(!node.isWalkable)
         {
-            label.color = pathColor;
+            label.color = blockedColor;
         }
         else
         {

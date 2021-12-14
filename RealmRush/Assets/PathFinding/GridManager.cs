@@ -41,7 +41,7 @@ public class GridManager : MonoBehaviour
             {
                 Vector2Int coordinate = new Vector2Int(x,y);
                 grid.Add(coordinate, new Node(coordinate,true));
-                Debug.Log(grid[coordinate].coordinates + " = "+grid[coordinate].isWalkable);
+               
             }
         }
     }
