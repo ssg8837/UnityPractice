@@ -2,12 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WayPoint : MonoBehaviour
+public class Tile : MonoBehaviour
 {
     [SerializeField] Tower towerPrefab;
     [SerializeField] public bool isPlaceable;
     [SerializeField] public float towerY= 0f;
 
+    GridManager gridManager;
+    Vector2Int coordinates = new Vector2Int();    
+
+    private void Awake() 
+    {
+        gridManager = FindObjectOfType<GridManager>();
+    }
+
+    private void Start()
+    {
+        if(gridManager != null)
+        {
+            coordinates = gridManager.GetCoordinatesFromPosition(transform.position);
+
+            if(!isPlaceable)
+            {
+                gridManager.BlockNode(coordinates);
+            }
+        }
+    }
     //마우스가 올려져 있을 때
     // private void OnMouseOver() 
     

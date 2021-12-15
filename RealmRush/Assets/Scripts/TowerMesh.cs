@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class TowerMesh : MonoBehaviour
 {
-    WayPoint wayPoint;
+    Tile wayPoint;
     // Start is called before the first frame update
     void Start()
     {
-        wayPoint = GetComponentInParent<WayPoint>();
+        wayPoint = GetComponentInParent<Tile>();
     }
 
     private void OnMouseDown()

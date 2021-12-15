@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyMoves : MonoBehaviour
 {
     Enemy enemy;
-    [SerializeField] List<WayPoint> path = new List<WayPoint>();
+    [SerializeField] List<Tile> path = new List<Tile>();
     // Start is called before the first frame update
     [SerializeField] [Range(0f, 5f)] float speed = 1f; 
     private void OnEnable() 
@@ -29,7 +29,7 @@ public class EnemyMoves : MonoBehaviour
 
         foreach(Transform child in parent.transform)
         {
-            WayPoint wayPoint = child.GetComponent<WayPoint>();
+            Tile wayPoint = child.GetComponent<Tile>();
 
             if(wayPoint != null)
             {
@@ -45,7 +45,7 @@ public class EnemyMoves : MonoBehaviour
 
    IEnumerator FollowPath()
     {         
-        foreach(WayPoint wayPoint in path)
+        foreach(Tile wayPoint in path)
         {
             //시작점
             Vector3 startPosition = transform.position;
