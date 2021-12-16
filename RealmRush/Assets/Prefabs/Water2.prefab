@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Water2
       objectReference: {fileID: 0}
+    - target: {fileID: 2026058639774957966, guid: eb7050e9b7d25b74f8d690f974823999, type: 3}
+      propertyPath: isWalkale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2582939316210551266, guid: eb7050e9b7d25b74f8d690f974823999, type: 3}
       propertyPath: m_fontColor.b
       value: 0.5

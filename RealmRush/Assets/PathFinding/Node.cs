@@ -10,6 +10,8 @@ public class Node //: MonoBehaviour
     public bool isWalkable;
     public bool isExplored;
     public bool isPath;
+
+    public bool isPlaceable;
     public Node connectionTo;
 
     public Node(Vector2Int coordinates, bool isWalkabe)

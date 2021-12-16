@@ -43,8 +43,15 @@ public class PathFinder : MonoBehaviour
     {
         startNode = grid[startCoordinates];
         destinationNode = grid[destinateCoordinates];
-        BreadthFirstSearch();        
-        BuildPath();
+
+        GetNewPath();
+    }
+
+    public List<Node> GetNewPath()
+    {
+        gridManager.RestNodes();
+        BreadthFirstSearch();
+        return BuildPath();
     }
 
     private void ExplorerNeighbors()
@@ -75,6 +82,9 @@ public class PathFinder : MonoBehaviour
     }
     private void BreadthFirstSearch()
     {
+        frontier.Clear();
+        reached.Clear();
+
         bool isRunning = true;
 
         frontier.Enqueue(startNode);
@@ -106,8 +116,31 @@ public class PathFinder : MonoBehaviour
             currentNode = currentNode.connectionTo;
 
             path.Add(currentNode);
+            currentNode.isPath = true;
         }
+        //배열 순서 뒤집기
+        path.Reverse();
 
         return path;
+    }
+
+    public bool WillBlockPath(Vector2Int coordinates)
+    {
+        if(grid.ContainsKey(coordinates))
+        {
+            bool previousState = grid[coordinates].isWalkable; 
+
+            grid[coordinates].isWalkable = false;
+            List<Node> newPath = GetNewPath();
+            grid[coordinates].isWalkable = previousState;
+
+            if(newPath.Count <= 1)
+            {
+                GetNewPath();
+                return true;
+            }
+        }
+
+        return false;
     }
 }

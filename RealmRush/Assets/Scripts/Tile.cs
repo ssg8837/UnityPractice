@@ -6,14 +6,17 @@ public class Tile : MonoBehaviour
 {
     [SerializeField] Tower towerPrefab;
     [SerializeField] public bool isPlaceable;
+    [SerializeField] public bool isWalkale;
     [SerializeField] public float towerY= 0f;
 
     GridManager gridManager;
+    PathFinder pathFinder;
     Vector2Int coordinates = new Vector2Int();    
 
     private void Awake() 
     {
         gridManager = FindObjectOfType<GridManager>();
+        pathFinder = FindObjectOfType<PathFinder>();
     }
 
     private void Start()
@@ -22,10 +25,11 @@ public class Tile : MonoBehaviour
         {
             coordinates = gridManager.GetCoordinatesFromPosition(transform.position);
 
-            if(!isPlaceable)
+            if(!isWalkale)
             {
                 gridManager.BlockNode(coordinates);
             }
+            gridManager.PlaceableNode(coordinates, isPlaceable);
         }
     }
     //마우스가 올려져 있을 때
@@ -34,7 +38,7 @@ public class Tile : MonoBehaviour
     //당연히 눌렸을 때
     public void OnMouseDown() 
     {
-        if(isPlaceable)
+        if(gridManager.GetNode(coordinates).isPlaceable && !pathFinder.WillBlockPath(coordinates))
         {
 
             Vector3 vecOnTower = transform.position;
@@ -46,6 +50,14 @@ public class Tile : MonoBehaviour
             //Instantiate(towerPrefab, transform.position, Quaternion.identity);
 
             isPlaceable = !isPlaced;
+            if(isPlaced)
+            {
+                isWalkale = !isPlaced;
+            
+                gridManager.BlockNode(coordinates);
+                BuildPath();
+            }
+            gridManager.PlaceableNode(coordinates, isPlaceable);
         }
     }
 }

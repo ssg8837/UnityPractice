@@ -49,6 +49,23 @@ public class GridManager : MonoBehaviour
             grid[coordinates].isWalkable = false;
         }
     }
+    public void PlaceableNode(Vector2Int coordinates, bool placeable)
+    {
+        if(grid.ContainsKey(coordinates))
+        {
+            grid[coordinates].isPlaceable = placeable;
+        }
+    }
+
+    public void RestNodes()
+    {
+        foreach(KeyValuePair<Vector2Int, Node> entry in grid)
+        {
+            entry.Value.connectionTo = null;
+            entry.Value.isExplored = false;
+            entry.Value.isPath = false;
+        }
+    }
 
     public Vector2Int GetCoordinatesFromPosition(Vector3 position)
     {
@@ -73,7 +90,7 @@ public class GridManager : MonoBehaviour
     {
         for(int x = 0; x < gridSize.x; x++)
         {
-            for(int y = 0; y< gridSize.y; y++)
+            for(int y = -2; y< gridSize.y; y++)
             {
                 Vector2Int coordinate = new Vector2Int(x,y);
                 grid.Add(coordinate, new Node(coordinate,true));
