@@ -6,9 +6,13 @@ public class PathFinder : MonoBehaviour
 {
 
     //시작노드 위치
-    [SerializeField] Vector2Int startCoordinates;
+    [SerializeField] Vector2Int startCoordinates;    
+    public Vector2Int StartCoordinates { get { return startCoordinates; } }
+
     //목적지점 노드 위치
-    [SerializeField] Vector2Int destinateCoordinates;
+    [SerializeField] Vector2Int destinateCoordinates;    
+    public Vector2Int DestinationCoordinates { get { return destinateCoordinates; } }
+
 
     //시작 노드
     Node startNode;
@@ -34,15 +38,13 @@ public class PathFinder : MonoBehaviour
         if(gridManager != null)
         {
             grid = gridManager.Grid;
+            startNode = grid[startCoordinates];
+            destinationNode = grid[destinateCoordinates];
         }
-        
-
     }
 
     private void Start() 
     {
-        startNode = grid[startCoordinates];
-        destinationNode = grid[destinateCoordinates];
 
         GetNewPath();
     }
@@ -82,6 +84,8 @@ public class PathFinder : MonoBehaviour
     }
     private void BreadthFirstSearch()
     {
+            startNode.isWalkable = true;
+            destinationNode.isWalkable = true;
         frontier.Clear();
         reached.Clear();
 

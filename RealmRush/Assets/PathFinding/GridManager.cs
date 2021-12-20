@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,6 +56,11 @@ public class GridManager : MonoBehaviour
         {
             grid[coordinates].isPlaceable = placeable;
         }
+    }
+
+    internal Vector3 GetPositionFromCoordinates(object startCoordinates)
+    {
+        throw new NotImplementedException();
     }
 
     public void RestNodes()

@@ -55,7 +55,6 @@ public class Tile : MonoBehaviour
                 isWalkale = !isPlaced;
             
                 gridManager.BlockNode(coordinates);
-                BuildPath();
             }
             gridManager.PlaceableNode(coordinates, isPlaceable);
         }
