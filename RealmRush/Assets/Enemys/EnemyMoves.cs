@@ -14,9 +14,8 @@ public class EnemyMoves : MonoBehaviour
 
     private void OnEnable() 
     {
-        FindPath();
         ReturnToStart();
-        StartCoroutine(FollowPath());
+        RecalculatePath(true);
     }
 
     private void Awake() 
@@ -27,11 +26,27 @@ public class EnemyMoves : MonoBehaviour
 
     }
     
-    private void FindPath()
+    private void RecalculatePath(bool resetPath)
     {
+        Vector2Int coordinates = new Vector2Int();
+
+        if(resetPath)
+        {
+            coordinates = pathfinder.StartCoordinates;
+        }
+        else
+        {
+            coordinates = gridManager.GetCoordinatesFromPosition(transform.position);
+        }
+
+        StopAllCoroutines();
+
         path.Clear();
 
-        path = pathfinder.GetNewPath();
+        path = pathfinder.GetNewPath(coordinates);
+        StartCoroutine(FollowPath());
+        //StartCoroutine(FollowPath());
+
         // foreach(GameObject tile in tiles) 
         // {
         //     Tile wayPoint = tile.GetComponent<Tile>();
@@ -56,7 +71,7 @@ public class EnemyMoves : MonoBehaviour
 
    IEnumerator FollowPath()
     {         
-        for(int i = 0; i < path.Count; i++) 
+        for(int i = 1; i < path.Count; i++) 
         {
             //시작점
             Vector3 startPosition = transform.position;
