@@ -49,7 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerPrefab: {fileID: -3505752445956418255, guid: e676f3963f3103d43804cbd1237e84e8, type: 3}
   isPlaceable: 1
-  towerY: 21
+  isWalkale: 0
+  tileType: 2
 --- !u!65 &1740255682501096477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -248,6 +249,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultColor: {r: 0, g: 0, b: 0, a: 1}
   blockedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  exploredColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  pathColor: {r: 1, g: 0.5, b: 0, a: 1}
 --- !u!1 &5794246159633081524
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +426,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.6000004, y: 3.1, z: 1.6000004}
+  m_Size: {x: 1.6000004, y: 2, z: 1.6000004}
   m_Center: {x: 0, y: 1.55, z: 0}
 --- !u!114 &710307382389209909
 MonoBehaviour:

@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    [SerializeField] int cost = 75;
+    int basicCost = 50;
+    [SerializeField] float buildDelay = 1f;
 
-   public bool CreateTower(Tower tower, Vector3 position)
+    private void Start() 
+    {
+        StartCoroutine(Build());
+    }
+   public bool CreateTower(Tower tower, Vector3 position, int tyleType)
    {
+       int cost = basicCost + tyleType * 15;
         Bank bank = FindObjectOfType<Bank>();
+
+        
 
         if(bank == null)
         {
@@ -18,8 +26,32 @@ public class Tower : MonoBehaviour
         {
             Instantiate(tower.gameObject, position, Quaternion.identity);
             bank.WithDraw(cost);
+
             return true;
         }
         return false;
+   }
+
+   IEnumerator Build()
+   {
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(false);   
+                
+                foreach (Transform grandChild in child)
+                {
+                    grandChild.gameObject.SetActive(false);   
+                }       
+            }
+       
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(true);   
+                yield return new WaitForSeconds(buildDelay);  
+                foreach (Transform grandChild in child)
+                {
+                    grandChild.gameObject.SetActive(true);   
+                }       
+            }   
    }
 }

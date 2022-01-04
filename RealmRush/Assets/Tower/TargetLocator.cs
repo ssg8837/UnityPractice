@@ -8,7 +8,7 @@ public class TargetLocator : MonoBehaviour
     Transform target;
     float tragetDistacne;
     //사거리
-    [SerializeField] float range = 15f;
+    private float range = 15f;
     [SerializeField] ParticleSystem weaponParticle;
      
     // Start is called before the first frame update
@@ -44,7 +44,7 @@ public class TargetLocator : MonoBehaviour
     private void AimWeapon()
     {
         weapon.LookAt(targetEnemy.transform);
-        if(tragetDistacne < range)
+        if(tragetDistacne < range+ transform.position.y * 3)
         {
             Attack(targetEnemy);
         }

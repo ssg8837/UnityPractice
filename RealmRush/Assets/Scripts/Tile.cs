@@ -7,7 +7,9 @@ public class Tile : MonoBehaviour
     [SerializeField] Tower towerPrefab;
     [SerializeField] public bool isPlaceable;
     [SerializeField] public bool isWalkale;
-    [SerializeField] public float towerY= 0f;
+
+    [SerializeField] public int tileType;
+    //0: earth, 1: wall, 2: tower
 
     GridManager gridManager;
     PathFinder pathFinder;
@@ -42,8 +44,8 @@ public class Tile : MonoBehaviour
         {
 
             Vector3 vecOnTower = transform.position;
-            vecOnTower.y= vecOnTower.y + towerY;
-            bool isSuccessful = towerPrefab.CreateTower(towerPrefab,vecOnTower);
+            vecOnTower.y= vecOnTower.y + (8f*tileType);
+            bool isSuccessful = towerPrefab.CreateTower(towerPrefab,vecOnTower, tileType);
 
 
             //배치하기 1을 2에 위치하며 3 방향으로 돌린다.
