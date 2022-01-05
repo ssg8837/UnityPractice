@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6476088516442496620}
   - component: {fileID: 1793461075792486503}
   - component: {fileID: 1740255682501096477}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TileNoPath
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   towerPrefab: {fileID: -3505752445956418255, guid: e676f3963f3103d43804cbd1237e84e8, type: 3}
   isPlaceable: 1
   isWalkale: 1
-  towerY: 0
+  tileType: 0
 --- !u!65 &1740255682501096477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 5415179256804923859}
   - component: {fileID: 2820897540543801355}
   - component: {fileID: 6619624093681334358}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 616876206177268625}
   - component: {fileID: 4144441891257154609}
   - component: {fileID: 6122625228380001408}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
