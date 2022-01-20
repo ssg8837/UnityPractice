@@ -20,5 +20,7 @@ public class PlayerHealth : MonoBehaviour
     void PlayerDead()
     {
         Debug.Log("Game Over");
+        DeathHandler dh =gameObject.GetComponent<DeathHandler>();
+        dh.HandleDeath();
     }
 }
