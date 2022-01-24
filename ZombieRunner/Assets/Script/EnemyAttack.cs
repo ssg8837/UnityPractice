@@ -18,8 +18,6 @@ public class EnemyAttack : MonoBehaviour
         {
             return;
         }
-        Debug.Log("Attacked Bang");
-        BroadcastMessage("AttackedByEnemy", damage);
         target.AttackedByEnemy(damage);
     }
 
