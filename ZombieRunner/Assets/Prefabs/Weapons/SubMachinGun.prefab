@@ -182,7 +182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &238652247764464517
 Transform:
   m_ObjectHideFlags: 0
@@ -270,6 +270,8 @@ MonoBehaviour:
   muzzleFlash: {fileID: 2097856715370773250}
   hitEffcet: {fileID: 6495228133638500834, guid: 677224a681ffd26499cea0de1b97d53a, type: 3}
   ammoSlot: {fileID: 0}
+  ammoType: 0
+  timeBetweenShots: 0.25
 --- !u!114 &1076196328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fpsCamera: {fileID: 0}
+  fpsController: {fileID: 0}
   zoomedOutFOV: 60
   zoomedInFOV: 40
   zoomOutSensitivity: 2

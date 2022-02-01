@@ -18,7 +18,14 @@ public class WeaponZoom : MonoBehaviour
 
 
 
-    bool zoomedInToggle = false;
+    private bool zoomedInToggle = false;
+    public bool ZoomFlg
+    {
+        get
+        {
+            return zoomedInToggle;
+        }
+    }
 
     // private void Start()
     // {
@@ -26,25 +33,36 @@ public class WeaponZoom : MonoBehaviour
     // }
     private void Update()
     {
+        //Pressed secondary button.
         if(Input.GetMouseButtonDown(1))
         {
             if(zoomedInToggle == false)
             {
-                zoomedInToggle = true;
-
-                fpsCamera.fieldOfView = zoomedInFOV;
-                fpsController.mouseLook.XSensitivity = zoomInSensitivity;
-                fpsController.mouseLook.YSensitivity = zoomInSensitivity;
+                ZoomIn();
             }
-            
+
             else
             {
-                zoomedInToggle = false;
-
-                fpsCamera.fieldOfView = zoomedOutFOV;
-                fpsController.mouseLook.XSensitivity = zoomOutSensitivity;
-                fpsController.mouseLook.YSensitivity = zoomOutSensitivity;
+                ZoomOut();
             }
         }
+    }
+
+    public void ZoomOut()
+    {
+        zoomedInToggle = false;
+
+        fpsCamera.fieldOfView = zoomedOutFOV;
+        fpsController.mouseLook.XSensitivity = zoomOutSensitivity;
+        fpsController.mouseLook.YSensitivity = zoomOutSensitivity;
+    }
+
+    public void ZoomIn()
+    {
+        zoomedInToggle = true;
+
+        fpsCamera.fieldOfView = zoomedInFOV;
+        fpsController.mouseLook.XSensitivity = zoomInSensitivity;
+        fpsController.mouseLook.YSensitivity = zoomInSensitivity;
     }
 }
