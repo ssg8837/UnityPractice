@@ -7,9 +7,10 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] float playerHealth = 100f; 
     // Start is called before the first frame update
-
+    
     public void AttackedByEnemy(float damage)
     {
+        gameObject.GetComponent<DisplayDamage>().ShowDamageImpact();
         playerHealth -= damage;
         if(playerHealth <= 0 )
         {
