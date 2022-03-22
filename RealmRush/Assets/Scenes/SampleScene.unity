@@ -4314,7 +4314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84088433a671e8409e232c3f7509c4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSize: {x: 12, y: 8}
+  gridSize: {x: 12, y: 9}
   unityGridSize: 10
 --- !u!4 &757228986
 Transform:
