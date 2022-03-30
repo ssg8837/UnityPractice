@@ -1265,9 +1265,10 @@ GameObject:
   - component: {fileID: 1685394070}
   - component: {fileID: 1685394069}
   - component: {fileID: 1685394068}
+  - component: {fileID: 1685394071}
   m_Layer: 0
-  m_Name: Target
-  m_TagString: Untagged
+  m_Name: Enemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1348,6 +1349,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1685394066}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1685394071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1685394066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f47ca749bbe5afc4a8df8fdce9349ec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1773323630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1716,5 +1729,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3788137307450835911, guid: 0f364709c6ed90a448ab3b4d6757a55b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0f364709c6ed90a448ab3b4d6757a55b, type: 3}
