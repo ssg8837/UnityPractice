@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace RPG.Movements 
-{        
+namespace RPG.Movement 
+{
+    ///<summary>
+    /// 이동 처리 클래스
+    ///</summary>
     public class Mover : MonoBehaviour
     {
         // 길을 찾아서 이동할 에이전트
@@ -49,12 +52,27 @@ namespace RPG.Movements
         //     }
         // }
 
+        ///<summary>
+        /// 목적지 까지 이동
+        ///</summary>
         public void MoveTo(Vector3 destination)
         {
             // 에이전트에게 목적지를 알려주는 함수        
             navAgent.SetDestination(destination);
+            navAgent.isStopped = false;
+        }
+        ///<summary>
+        /// 이동을 멈춤
+        ///</summary>
+        public void Stop()
+        {
+            navAgent.isStopped = true;
         }
 
+        
+        ///<summary>
+        /// 이동 애니메이션을 갱신함.
+        ///</summary>
         private void UpdateAnimator()
         {
             //에이전트의 현재속력

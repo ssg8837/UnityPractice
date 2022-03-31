@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RPG.Movements;
+using RPG.Movement;
 using RPG.Combat;
 
 namespace RPG.Control 
@@ -26,32 +26,57 @@ namespace RPG.Control
             //마우스 포지션으로 레이캐스트
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            InteractWithCombat(ray);
-            InteractWithMovement(ray);
+            if(!InteractWithCombat(ray)) //적이 있을 경우 전투 처리로
+            {
+                if(InteractWithMovement(ray)) //적이 없을 경우 이동 처리로
+                {
+                    playerFighter.StopAttack();
+                }
+            }
         }
 
-        private void InteractWithCombat(Ray ray)
+        /// <summary>
+        /// 플레이어 컨트롤러 전투 처리 메소드
+        /// </summary>
+        /// <param name = "ray">레이</param>
+        ///<returns> 전투처리 : TRUE, 이동처리 : FALSE </returns>
+        private bool InteractWithCombat(Ray ray)
         {
             RaycastHit[] rayTargets = Physics.RaycastAll(ray);
             foreach(RaycastHit rayTarget in rayTargets)
             {
                 CombatTarget target = rayTarget.transform.GetComponent<CombatTarget>();
+                //마우스 위치에 적이 있을 경우
                 if(target != null &&
-                   Input.GetMouseButton(0))
+                   Input.GetMouseButton(0)) //마우스 버튼이 눌린 경우
                    {
-                       playerFighter.Attack();
+                        playerFighter.Attack(target);
+                        return true;
                    }
-            }          
+            }
+            return false; // 마우스 위치에 적이 없을 경우          
         }
-        private void InteractWithMovement(Ray ray)
+        
+        /// <summary>
+        /// 플레이어 컨트롤러 이동 처리 메소드
+        /// </summary>
+        /// <param name = "ray">레이</param>
+        ///<returns> 이동 처리 : TRUE, 레이캐스트 실패 : FALSE </returns>
+        private bool InteractWithMovement(Ray ray)
         {
             if (Input.GetMouseButton(0))
             {
-                MoveToCursor(ray);
+                return MoveToCursor(ray);
             }
+            return false;
         }
 
-        private void MoveToCursor(Ray ray)
+        /// <summary>
+        /// 커서의 위치로 이동하게 하는 처리
+        /// </summary>
+        /// <param name = "ray">레이</param>
+        ///<returns> 이동 처리 : TRUE, 레이캐스트 실패 : FALSE </returns>
+        private bool MoveToCursor(Ray ray)
         {
             //레이캐스트에 맞은 정보
             RaycastHit hit;
@@ -62,7 +87,10 @@ namespace RPG.Control
             if(hasHit)
             {
                 playerMover.MoveTo(hit.point);
+                return true;
             }
+
+            return false; //레이캐스트에 맞은 정보가 없을 경우
         }
 
     }
