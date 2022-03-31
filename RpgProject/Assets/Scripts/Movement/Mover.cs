@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using RPG.Core;
 
 namespace RPG.Movement 
 {
     ///<summary>
     /// 이동 처리 클래스
     ///</summary>
-    public class Mover : MonoBehaviour
+    public class Mover : MonoBehaviour, IAction
     {
         // 길을 찾아서 이동할 에이전트
         private NavMeshAgent navAgent;
 
         // 이동 애니메이션을 재생할 애니메이터
         private Animator moveAnimator;
-
 
         private void Awake() 
         {
@@ -57,6 +57,7 @@ namespace RPG.Movement
         ///</summary>
         public void MoveTo(Vector3 destination)
         {
+            ActionScheduler.StartAction(this);
             // 에이전트에게 목적지를 알려주는 함수        
             navAgent.SetDestination(destination);
             navAgent.isStopped = false;

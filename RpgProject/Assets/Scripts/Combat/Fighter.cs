@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RPG.Core;
 using RPG.Movement;
 
 namespace RPG.Combat
@@ -8,7 +9,7 @@ namespace RPG.Combat
     /// <summary>
     /// 플레이어가 근접 전투원일 경우 전투 처리 클래스
     /// </summary>
-    public class Fighter : MonoBehaviour
+    public class Fighter : MonoBehaviour, IAction
     {
 
         [SerializeField] float weaponRange =2f;
@@ -32,7 +33,7 @@ namespace RPG.Combat
                 }
                 else
                 {
-                    playerMover.Stop();                                     //이동 메소드 정지
+                    ActionScheduler.StartAction(this);
                 }
             }
         }
@@ -40,7 +41,11 @@ namespace RPG.Combat
         {
             target = combatTarget.transform;
         }
-
+        
+        public void Stop()
+        {
+            Debug.Log("Fighter Stop");
+        }
 
         public void StopAttack()
         {
