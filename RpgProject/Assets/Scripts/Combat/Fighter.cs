@@ -37,7 +37,7 @@ namespace RPG.Combat
                 }
             }
         }
-        public void Attack(CombatTarget combatTarget)
+        public void AttackEnemey(CombatTarget combatTarget)
         {
             target = combatTarget.transform;
         }

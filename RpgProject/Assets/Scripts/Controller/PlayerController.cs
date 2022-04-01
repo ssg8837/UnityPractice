@@ -50,7 +50,7 @@ namespace RPG.Control
                 if(target != null &&
                    Input.GetMouseButton(0)) //마우스 버튼이 눌린 경우
                    {
-                        playerFighter.Attack(target);
+                        playerFighter.AttackEnemey(target);
                         return true;
                    }
             }
