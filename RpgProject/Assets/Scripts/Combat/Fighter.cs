@@ -13,9 +13,11 @@ namespace RPG.Combat
     {
 
         [SerializeField] float weaponRange =2f;
+        [SerializeField] float timeBetweenAttack = 0.5f;
         Transform target;
 
         Mover playerMover;
+        float TimeSinceLastAttack = 0;
 
         private void Start()
         {
@@ -24,6 +26,7 @@ namespace RPG.Combat
 
         private void Update()
         {
+            TimeSinceLastAttack += Time.deltaTime;
             if (target != null)
             {
                 if(Vector3.Distance(transform.position, target.position)    //플레이어와 타겟간 거리
@@ -34,9 +37,21 @@ namespace RPG.Combat
                 else
                 {
                     ActionScheduler.StartAction(this);
+                    AttackBehaviour();
                 }
             }
         }
+
+        private void AttackBehaviour()
+        {
+            if(TimeSinceLastAttack > timeBetweenAttack)
+            {
+                GetComponent<Animator>().SetTrigger("triggerAttack");
+                TimeSinceLastAttack = 0;
+            }
+
+        }
+
         public void AttackEnemey(CombatTarget combatTarget)
         {
             target = combatTarget.transform;
@@ -50,6 +65,14 @@ namespace RPG.Combat
         public void StopAttack()
         {
             target = null;
+        }
+
+        ///<summary>
+        ///공격 애니메이션 재생시 이벤트
+        ///</summary>
+        void Hit()
+        {
+
         }
     }
 }
