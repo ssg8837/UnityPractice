@@ -16,6 +16,11 @@ namespace RPG.Combat
         [SerializeField] float timeBetweenAttack = 0.5f;
         Transform target;
 
+        ///<summary>
+        ///데미지(임시_무기 없을시 )
+        ///</summary>
+        float damage = 5f;
+
         Mover playerMover;
         float TimeSinceLastAttack = 0;
 
@@ -72,7 +77,10 @@ namespace RPG.Combat
         ///</summary>
         void Hit()
         {
-
+            if(target != null)
+            {
+                target.GetComponent<Health>().TakeDamage(damage);
+            }
         }
     }
 }
