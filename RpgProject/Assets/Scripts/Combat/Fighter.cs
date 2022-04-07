@@ -60,6 +60,10 @@ namespace RPG.Combat
         public void AttackEnemey(CombatTarget combatTarget)
         {
             target = combatTarget.transform;
+            if(target.GetComponent<Health>().IsDead())
+            {
+                target = null;
+            }
         }
         
         public void Stop()
@@ -70,6 +74,7 @@ namespace RPG.Combat
         public void StopAttack()
         {
             target = null;
+            gameObject.GetComponent<Animator>().SetTrigger("tiggerStopAttack");
         }
 
         ///<summary>
@@ -80,6 +85,10 @@ namespace RPG.Combat
             if(target != null)
             {
                 target.GetComponent<Health>().TakeDamage(damage);
+                if(target.GetComponent<Health>().IsDead())
+                {
+                    target = null;
+                }
             }
         }
     }

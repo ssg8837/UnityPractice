@@ -9,7 +9,7 @@ namespace RPG.Control
     public class PlayerController : MonoBehaviour
     {
         // Start is called before the first frame update
-        private CombatTarget combatTarget;
+        private CombatTarget currentTarget;
         
         private Fighter playerFighter;
 
@@ -50,8 +50,16 @@ namespace RPG.Control
                 if(target != null &&
                    Input.GetMouseButton(0)) //마우스 버튼이 눌린 경우
                    {
-                        playerFighter.AttackEnemey(target);
-                        return true;
+                       if(currentTarget == null ||
+                          currentTarget == target)
+                        {
+                            playerFighter.AttackEnemey(target);
+                            return true;
+                        }
+                        else
+                        {
+                            currentTarget = target;
+                        }
                    }
             }
             return false; // 마우스 위치에 적이 없을 경우          
