@@ -7,9 +7,15 @@ namespace RPG.Combat
     ///</summary>
     public class CombatTarget : MonoBehaviour
     {
-        public bool isEnemy()
+        public bool CanAttack()
         {
-            return true;
+            Health targetHealth = gameObject.GetComponent<Health>();
+            bool result = false;
+            if(targetHealth != null)
+            {
+                result = !gameObject.GetComponent<Health>().IsDead();
+            }
+            return result;
         }
 
     }

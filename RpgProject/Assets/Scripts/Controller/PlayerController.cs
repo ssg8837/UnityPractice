@@ -48,6 +48,7 @@ namespace RPG.Control
                 CombatTarget target = rayTarget.transform.GetComponent<CombatTarget>();
                 //마우스 위치에 적이 있을 경우
                 if(target != null &&
+                    target.CanAttack()&&
                    Input.GetMouseButton(0)) //마우스 버튼이 눌린 경우
                    {
                        if(currentTarget == null ||
