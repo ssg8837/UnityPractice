@@ -54,7 +54,7 @@ namespace RPG.Control
                        if(currentTarget == null ||
                           currentTarget == target)
                         {
-                            playerFighter.AttackEnemey(target);
+                            playerFighter.AttackTarget(target.transform);
                             return true;
                         }
                         else

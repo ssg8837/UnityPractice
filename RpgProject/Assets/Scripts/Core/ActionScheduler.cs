@@ -4,9 +4,9 @@ namespace RPG.Core
 {
     public class ActionScheduler : MonoBehaviour
     {
-        private static IAction currentAction;
+        private IAction currentAction;
 
-        public static void StartAction(IAction action)
+        public void StartAction(IAction action)
         {
             if(currentAction == null)
             {

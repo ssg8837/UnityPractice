@@ -41,7 +41,7 @@ namespace RPG.Combat
                 }
                 else
                 {
-                    ActionScheduler.StartAction(this);
+                    GetComponent<ActionScheduler>().StartAction(this);
                     AttackBehaviour();
                 }
             }
@@ -52,15 +52,16 @@ namespace RPG.Combat
             transform.LookAt(target);
             if(TimeSinceLastAttack > timeBetweenAttack)
             {
+                GetComponent<Animator>().ResetTrigger("tiggerStopAttack");
                 GetComponent<Animator>().SetTrigger("triggerAttack");
                 TimeSinceLastAttack = 0;
             }
 
         }
 
-        public void AttackEnemey(CombatTarget combatTarget)
+        public void AttackTarget(Transform targeTransform)
         {
-            target = combatTarget.transform;
+            target = targeTransform;
             if(target.GetComponent<Health>().IsDead())
             {
                 target = null;
@@ -75,7 +76,8 @@ namespace RPG.Combat
         public void StopAttack()
         {
             target = null;
-            gameObject.GetComponent<Animator>().SetTrigger("tiggerStopAttack");
+            GetComponent<Animator>().ResetTrigger("triggerAttack");
+            GetComponent<Animator>().SetTrigger("tiggerStopAttack");
         }
 
         ///<summary>

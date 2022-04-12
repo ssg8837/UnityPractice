@@ -57,7 +57,7 @@ namespace RPG.Movement
         ///</summary>
         public void MoveTo(Vector3 destination)
         {
-            ActionScheduler.StartAction(this);
+            GetComponent<ActionScheduler>().StartAction(this);
             // 에이전트에게 목적지를 알려주는 함수        
             navAgent.SetDestination(destination);
             navAgent.isStopped = false;
