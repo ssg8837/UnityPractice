@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character_Knights_Soldier_01
       objectReference: {fileID: 0}
+    - target: {fileID: 133518, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 417656, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -54,6 +58,10 @@ PrefabInstance:
     - target: {fileID: 417656, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9572094, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 13787996, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -114,12 +122,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5619880842912688229, guid: 0f364709c6ed90a448ab3b4d6757a55b, type: 3}
       propertyPath: m_Name
-      value: PlayerSoldier
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5619880842912688229, guid: 0f364709c6ed90a448ab3b4d6757a55b, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9174473196532814439, guid: 0f364709c6ed90a448ab3b4d6757a55b, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f364709c6ed90a448ab3b4d6757a55b, type: 3}
 --- !u!1 &8528006936951856952 stripped
