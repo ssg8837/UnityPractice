@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 10fdf7d751a2aef4bbb1b02c5b1e3f8d
+guid: 3a782d06f942a3546b17ff6aef91beb7
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
@@ -251,7 +251,7 @@ ModelImporter:
     second: Tail5
   - first:
       74: 7400000
-    second: Anim_Dra_Yes
+    second: Anim_Dra_Eat
   - first:
       95: 9500000
     second: //RootNode
@@ -284,11 +284,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Anim_Dra_Yes
-      takeName: Anim_Dra_Yes
+      name: Anim_Dra_Eat
+      takeName: Anim_Dra_Eat
       internalID: 0
-      firstFrame: 241
-      lastFrame: 264.5
+      firstFrame: 111
+      lastFrame: 150
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -311,7 +311,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 241
+      additiveReferencePoseFrame: 111
     isReadable: 1
   meshes:
     lODScreenPercentages: []

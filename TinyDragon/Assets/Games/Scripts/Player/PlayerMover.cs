@@ -85,19 +85,11 @@ namespace TinyDragon.Player
                     }
                     else 
                     {   
-                        //TODO:기본 공격 처리
-                        if(mMeleeComboStage < 3)
-                        {
-                            mMeleeComboStage++;
-
-                            Vector3 velocity = transform.TransformDirection(Vector3.forward);
-                            velocity *= 2;
-                            playerAnimator.SetFloat("ComboStage", mMeleeComboStage);
-                            Debug.Log(mMeleeComboStage);
+                        Vector3 velocity = transform.TransformDirection(Vector3.forward);
+                        velocity *= 2;
+                        playerAnimator.SetTrigger("Attack");
                             
-                            playerRigidbody.velocity = velocity;
-
-                        }
+                        playerRigidbody.velocity = velocity;
 
                     }
                 }
