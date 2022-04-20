@@ -79,19 +79,7 @@ namespace TinyDragon.Player
                 }
                 else if(inputAttack == Constants.INPUT_ON)
                 {
-                    if(mJumping)
-                    {
-                        //TODO:점프 중 전투조작 처리
-                    }
-                    else 
-                    {   
-                        Vector3 velocity = transform.TransformDirection(Vector3.forward);
-                        velocity *= 2;
-                        playerAnimator.SetTrigger("Attack");
-                            
-                        playerRigidbody.velocity = velocity;
-
-                    }
+                    Attack();
                 }
                 else
                 {
@@ -102,6 +90,25 @@ namespace TinyDragon.Player
                         Jump();
                     }
                 }
+
+            }
+        }
+
+        private void Attack()
+        {
+            if (mJumping)
+            {
+                //TODO:점프 중 전투조작 처리
+            }
+            else
+            {
+                Vector3 velocity = transform.TransformDirection(Vector3.forward);
+                velocity *= 2;
+                playerAnimator.SetTrigger("Attack");
+
+                playerRigidbody.velocity = velocity;
+
+                mAttacking = true;
 
             }
         }
@@ -183,6 +190,20 @@ namespace TinyDragon.Player
         {
             mDodging = false;
             Debug.Log(mDodging);
+        }
+
+        public void MeleeAttack(int aComboAttack)
+        {
+            switch(aComboAttack)
+            {
+                case 3:
+                    mAttacking = false;
+                    playerAnimator.ResetTrigger("Attack");
+                    break;
+                default:
+                    mAttacking = true;
+                    break;
+            }
         }
     }
 }
