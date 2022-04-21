@@ -22,7 +22,14 @@ namespace TinyDragon.Player
         ///플레이어의 닷지 스피드
         ///</summary>
         [Tooltip("플레이어의 닷지 스피드")]
-        private float stepSpeed = 8f;
+        [SerializeField] private float stepSpeed = 8f;
+
+        [Tooltip("연속공격 후딜")]
+        [SerializeField] private float attackInterval = 0.8f;
+
+        
+        [Tooltip("닷지 후딜")]
+        [SerializeField] private float dodgeInterval = 1f;
 
         ///<summary>
         ///플레이어 리지드 바디
@@ -43,6 +50,29 @@ namespace TinyDragon.Player
         ///공격 중 플래그
         ///</summary>
         private bool mAttacking = false;
+
+        
+        ///<summary>
+        ///닷지 후 닷지불가 플래그
+        ///</summary>
+        private bool mDodgeWait = false;
+
+        ///<summary>
+        ///공격 후 공격불가 플래그
+        ///</summary>
+        private bool mAttackWait = false;
+
+        ///<summary>
+        ///닷지 후 닷지불가 타이머
+        ///</summary>
+        private float mDodgeWaitTimer = 0;
+
+        
+        ///<summary>
+        ///공격 후 공격불가 타이머
+        ///</summary>
+        private float mAttackWaitTimer = 0;
+
 
         ///<summary>
         ///현재 공격 중인 단계
@@ -69,15 +99,17 @@ namespace TinyDragon.Player
             float inputDodge = Input.GetAxisRaw("Dodge");
             float inputAttack = Input.GetAxisRaw("Attack");
 
-            
-            if(mDodging){}                  //TODO: 회피중 조작 처리(미정)
+            inputDodge = IntervalCheck(inputDodge , mDodgeWaitTimer, dodgeInterval);
+            inputAttack = IntervalCheck(inputAttack , mAttackWaitTimer, attackInterval);
+
+            if (mDodging) { }                  //TODO: 회피중 조작 처리(미정)
             else                            //회피중이 아닐 때 처리(평시 처리)
             {
-                if(!mJumping && inputDodge == Constants.INPUT_ON)    //점프중이 아닐때 닷지키가 눌림.
+                if (!mJumping && inputDodge == Constants.INPUT_ON)    //점프중이 아닐때 닷지키가 눌림.
                 {
                     Dodge(inputX, inputZ);
                 }
-                else if(inputAttack == Constants.INPUT_ON)
+                else if (inputAttack == Constants.INPUT_ON)
                 {
                     Attack();
                 }
@@ -85,13 +117,31 @@ namespace TinyDragon.Player
                 {
                     Move(inputX, inputZ);
 
-                    if(!mJumping)
+                    if (!mJumping)
                     {
                         Jump();
                     }
                 }
 
             }
+        }
+
+        private float IntervalCheck(float input, float timeChecker, float interval)
+        {
+            if (mAttackWait)
+            {
+                mAttackWaitTimer += Time.deltaTime;
+                if (mAttackWaitTimer >= attackInterval)
+                {
+                    mAttackWait = false;
+                }
+                else
+                {
+                    input = Constants.INPUT_OFF;
+                }
+            }
+
+            return input;
         }
 
         private void Attack()
@@ -136,6 +186,9 @@ namespace TinyDragon.Player
             playerAnimator.SetFloat("playerSpeed", 0);
 
             playerRigidbody.velocity = velocity;
+
+            mDodgeWait = true;
+            mDodgeWaitTimer = 0;
         }
 
         private void Jump()
@@ -189,7 +242,6 @@ namespace TinyDragon.Player
         public void InitDodging()
         {
             mDodging = false;
-            Debug.Log(mDodging);
         }
 
         public void MeleeAttack(int aComboAttack)
@@ -199,6 +251,8 @@ namespace TinyDragon.Player
                 case 3:
                     mAttacking = false;
                     playerAnimator.ResetTrigger("Attack");
+                    mAttackWait = true;
+                    mAttackWaitTimer = 0;
                     break;
                 default:
                     mAttacking = true;
