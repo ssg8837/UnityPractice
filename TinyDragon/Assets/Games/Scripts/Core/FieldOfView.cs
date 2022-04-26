@@ -52,7 +52,6 @@ namespace TinyDragon.Core
                     if(Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask))
                     {
                         visibleTargets.Add(target); 
-                        print("raycast hit!"); 
                         Debug.DrawRay(transform.position, dirToTarget * 10f, Color.red, 5f); 
                         
                         GetComponentInChildren<Animator>().SetTrigger("Check");
