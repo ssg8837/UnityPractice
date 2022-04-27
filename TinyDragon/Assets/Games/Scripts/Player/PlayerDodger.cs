@@ -20,7 +20,16 @@ namespace TinyDragon.Player
         [Tooltip("닷지 후딜")]
         [SerializeField] private float dodgeInterval = 1f;
         
-        public bool Dodge(float inputX, float inputZ, Animator animator , Rigidbody rigidbody)
+        private Rigidbody playerRigidbody;
+
+        public Rigidbody Rigidbody
+        {
+            set
+            {
+                playerRigidbody = value;
+            }
+        }
+        public bool Dodge(float inputX, float inputZ, Animator animator )
         {
             animator.SetTrigger("Dodge");
 
@@ -41,7 +50,7 @@ namespace TinyDragon.Player
 
             animator.SetFloat("playerSpeed", 0);
 
-            rigidbody.velocity = velocity;
+            playerRigidbody.velocity = velocity;
 
 
             return true;

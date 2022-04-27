@@ -4,7 +4,7 @@ namespace TinyDragon.Core
 {
     public interface IAttacker
     {
-        bool Attack(bool mJumping, Animator animator, Rigidbody rigidbody);
+        bool Attack(bool mJumping, Animator animator);
 
         bool PlayerMeleeAttack(int aComboAttack, Animator animator);
 

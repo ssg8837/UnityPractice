@@ -14,7 +14,15 @@ namespace TinyDragon.Player
 
         [Tooltip("연속공격 후딜")]
         [SerializeField] public float attackInterval = 0.8f;
+        private Rigidbody playerRigidbody;
 
+        public Rigidbody Rigidbody
+        {
+            set
+            {
+                playerRigidbody = value;
+            }
+        }
                 
         ///<summary>
         ///공격 후 공격불가 플래그
@@ -35,7 +43,7 @@ namespace TinyDragon.Player
 
 
         public float jumpPower = 50f;
-        public bool Attack(bool mJumping, Animator animator, Rigidbody rigidbody)
+        public bool Attack(bool mJumping, Animator animator)
         {
             if (mJumping)
             {
@@ -47,7 +55,7 @@ namespace TinyDragon.Player
                 velocity *= 2;
                 animator.SetTrigger("Attack");
 
-                rigidbody.velocity = velocity;
+                playerRigidbody.velocity = velocity;
 
                 return true;
 

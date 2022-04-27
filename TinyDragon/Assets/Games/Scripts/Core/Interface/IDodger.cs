@@ -4,7 +4,7 @@ namespace TinyDragon.Core
 {
     public interface IDodger
     {
-        bool Dodge(float inputX, float inputZ, Animator animator , Rigidbody rigidbody);
+        bool Dodge(float inputX, float inputZ, Animator animator );
 
         float getInterval();
     }

@@ -8,7 +8,7 @@ namespace TinyDragon.Player
     ///<summary>
     ///플레이어 이동 관련 클래스
     ///</summary>
-    public class PlayerMover : MonoBehaviour, IMover
+    public class PlayerMover : MonoBehaviour
     {
 
         ///<summary>
@@ -25,20 +25,34 @@ namespace TinyDragon.Player
         [Tooltip("레이어의 점프 정도")]
         [SerializeField]  public float jumpPower = 50f;
 
+        private Rigidbody playerRigidbody;
 
-        public bool Jump(Animator animator, Rigidbody rigidbody)
+        public Rigidbody Rigidbody
+        {
+            set
+            {
+                playerRigidbody = value;
+            }
+        }
+
+        public bool Jump(Animator animator)
         {
             float inputY = Input.GetAxisRaw("Jump");
             if (inputY == 1)
             {
                 animator.SetTrigger("Jump");
-                rigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+                playerRigidbody.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
                 return true;
             }
             return false;
         }
 
-        public void Move(float inputX, float inputZ , Animator animator, Rigidbody rigidbody)
+        ///<summary>
+        ///플레이어 이동 메소드
+        ///</summary>
+        ///<param name = "inputX">키보드 입력 X좌표</param>
+        ///<param name = "inputZ">키보드 입력 Z좌표</param>
+        public void Move(float inputX, float inputZ , Animator animator)
         {
             Vector3 velocity = new Vector3(inputX, 0, inputZ);
 
@@ -50,23 +64,23 @@ namespace TinyDragon.Player
             if( inputX != 0 || inputZ != 0)
             {
                 //이동 방향에 맞춰 회전
-                playerRotation(velocity, rigidbody);
+                Rotate(velocity);
             }
             velocity *= speed;
 
             animator.SetFloat("playerSpeed", velocity.magnitude);
 
-            rigidbody.velocity = velocity;
+            playerRigidbody.velocity = velocity;
        
         }
 
         ///<summary>
         ///플레이어에 맞춰 회전
         ///</summary>
-        public void playerRotation(Vector3 velocity , Rigidbody rigidbody)
+        public void Rotate(Vector3 velocity)
         {
             Quaternion rotation = Quaternion.LookRotation(velocity);
-            rigidbody.rotation = Quaternion.Slerp(rigidbody.rotation, rotation, speed/20 );
+            playerRigidbody.rotation = Quaternion.Slerp(playerRigidbody.rotation, rotation, speed/20 );
         }
     }
 

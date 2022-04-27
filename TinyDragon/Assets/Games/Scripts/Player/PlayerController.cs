@@ -51,12 +51,15 @@ namespace TinyDragon.Player
         void Start()
         {
             playerRigidbody = GetComponent<Rigidbody>();
-            playerAnimator = GetComponentInChildren<Animator>();
+            playerAnimator = GetComponent<Animator>();
 
-            mover = GetComponentInChildren<PlayerMover>();
-            attacker = GetComponentInChildren<PlayerAttacker>();
-            dodger = GetComponentInChildren<PlayerDodger>();
+            mover = GetComponent<PlayerMover>();
+            attacker = GetComponent<PlayerAttacker>();
+            dodger = GetComponent<PlayerDodger>();
             
+            mover.Rigidbody = playerRigidbody;
+            attacker.Rigidbody = playerRigidbody;
+            dodger.Rigidbody = playerRigidbody;
         }
 
         // Update is called once per frame
@@ -76,7 +79,7 @@ namespace TinyDragon.Player
             {
                 if (!mBoolJumping && inputDodge == Constants.INPUT_ON)    //점프중이 아닐때 닷지키가 눌림.
                 {
-                    mBoolDodging = dodger.Dodge(inputX, inputZ, playerAnimator, playerRigidbody);
+                    mBoolDodging = dodger.Dodge(inputX, inputZ, playerAnimator);
                     if(mBoolDodging)
                     {
                         mBoolWaitDodgeFlg = mBoolDodging;
@@ -85,15 +88,15 @@ namespace TinyDragon.Player
                 }
                 else if (inputAttack == Constants.INPUT_ON)
                 {
-                    attacker.Attack(mBoolJumping, playerAnimator, playerRigidbody);
+                    attacker.Attack(mBoolJumping, playerAnimator);
                 }
                 else
                 {
-                    mover.Move(inputX, inputZ, playerAnimator, playerRigidbody);
+                    mover.Move(inputX, inputZ, playerAnimator);
 
                     if (!mBoolJumping)
                     {
-                        mBoolJumping = mover.Jump(playerAnimator, playerRigidbody);
+                        mBoolJumping = mover.Jump(playerAnimator);
                     }
                 }
 
