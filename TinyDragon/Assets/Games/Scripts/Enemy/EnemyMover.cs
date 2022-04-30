@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using TinyDragon.Core;
+using System;
 
 namespace TinyDragon.Enemy
 {
@@ -17,16 +18,16 @@ namespace TinyDragon.Enemy
         ///</summary>
         [Tooltip("적의 스피드")]
         [SerializeField] private float speed = 5f;
-        
-
 
         ///<summary>
         ///적의 점프 정도
         ///</summary>
         [Tooltip("적의 점프 정도")]
-        [SerializeField]  public float jumpPower = 50f;
+        [SerializeField] public float jumpPower = 50f;
+
 
         private Rigidbody EnemyRigidbody;
+        private Animator EnemyAnimator;
 
         private NavMeshAgent navMesh;
 
@@ -46,24 +47,31 @@ namespace TinyDragon.Enemy
             }
         }
 
-        public bool Jump(Animator animator)
+        public Animator Animator
         {
-            animator.SetTrigger("Jump");
-            return true;
+            set
+            {
+                EnemyAnimator = value;
+            }
+        }
+
+        public void Jump()
+        {
+            EnemyAnimator.SetTrigger("Jump");
         }
 
         ///<summary>
         ///적 이동 메소드
         ///</summary>
-        public void Move(Transform transform ,Animator animator)
+        public void Move(Transform transform)
         {
             navMesh.destination = transform.position;
-            animator.SetFloat("MoveSpeed", navMesh.speed);
+            navMesh.isStopped = false;
         }
 
-        public void Stop(Animator animator)
+        public void UpdateMoveMotion()
         {
-            animator.SetFloat("MoveSpeed", 0);
+            EnemyAnimator.SetFloat("MoveSpeed", navMesh.speed);
         }
 
         ///<summary>
@@ -71,6 +79,11 @@ namespace TinyDragon.Enemy
         ///</summary>
         public void Rotate(Vector3 velocity)
         {
+        }
+
+        public void Stop()
+        {
+            navMesh.isStopped = true;
         }
     }
 

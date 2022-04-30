@@ -6,8 +6,6 @@ namespace TinyDragon.Core
     {
         bool Attack(bool mJumping, Animator animator);
 
-        bool PlayerMeleeAttack(int aComboAttack, Animator animator);
-
         float getInterval();
     }
 }
