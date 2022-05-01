@@ -10,11 +10,15 @@ namespace TinyDragon.Player
     ///</summary>
     public class PlayerAttacker : MonoBehaviour, IAttacker
     {
-      
+
 
         [Tooltip("연속공격 후딜")]
         [SerializeField] public float attackInterval = 0.8f;
         private Rigidbody playerRigidbody;
+
+
+        [Tooltip("사정거리")]
+        [SerializeField] public float attackDistance = 0.8f;
 
         public Rigidbody Rigidbody
         {
@@ -23,13 +27,13 @@ namespace TinyDragon.Player
                 playerRigidbody = value;
             }
         }
-                
+
         ///<summary>
         ///공격 후 공격불가 플래그
         ///</summary>
         private bool mAttackWait = false;
 
-        
+
         ///<summary>
         ///공격 후 공격불가 타이머
         ///</summary>
@@ -65,7 +69,7 @@ namespace TinyDragon.Player
 
         public bool PlayerMeleeAttack(int aComboAttack, Animator animator)
         {
-            switch(aComboAttack)
+            switch (aComboAttack)
             {
                 case 3:
                     animator.ResetTrigger("Attack");

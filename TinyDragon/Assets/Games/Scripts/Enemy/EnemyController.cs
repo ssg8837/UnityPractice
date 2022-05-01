@@ -57,53 +57,70 @@ namespace TinyDragon.Enemy
         ///</summary>
         private bool mBoolPatrolReverse = false;
 
-        public List<Transform> visibleTargets = new List<Transform>();
 
-        private Animator EnemyAnimator;
+        private Animator enemyAnimator;
         private EnemyMover mover;
         private EnemyAttacker attacker;
 
+        private NavMeshAgent enemyNavMeshAgent;
+
+
         private void Start()
         {
-            EnemyAnimator = GetComponent<Animator>();
+            enemyAnimator = GetComponent<Animator>();
+
+            enemyNavMeshAgent = GetComponent<NavMeshAgent>();
 
             mover = GetComponent<EnemyMover>();
 
-            mover.NavMesh = GetComponent<NavMeshAgent>();
+            mover.NavMesh = enemyNavMeshAgent;
 
-            mover.Animator = EnemyAnimator;
+            mover.Animator = enemyAnimator;
 
 
             attacker = GetComponent<EnemyAttacker>();
 
-            attacker.Animator = EnemyAnimator;
+            attacker.Animator = enemyAnimator;
 
 
             mIntPatrolCounter = 0;
 
             mIntPatrolMax = mListPatrol.Count;
 
-            StartCoroutine("SearchAndAttack", .5f);
+            StartCoroutine("SearchAndAttack", .5f); //순찰 중(생략 가능)에 플레이어를 찾을 경우 쫓아가서 공격 코루틴
         }
 
 
+        ///<summary>
+        /// 순찰 중(생략 가능)에 플레이어를 찾을 경우 쫓아가서 공격 코루틴
+        ///</summary>
         IEnumerator SearchAndAttack(float delay)
         {
             while (true)
             {
                 yield return new WaitForSeconds(delay);
+
+                Patrol();
                 FindTargets();
+                if (mBoolStalk)
+                {
+                    //TODO :: INTERVAL 이용해서 플레이어에게 회전(일정 시간)
+
+                    //TODO :: 일정시간 + 3초간(회전 이후 3초), 랜덤한 방향으로 회전 
+
+                    //TODO :: 일정 시간 지나면 추적 플래그 종료 후 순찰로 돌아감,
+
+                    mBoolStalk = false;
+                }
                 mover.UpdateMoveMotion();
             }
         }
 
+        ///<summary>
+        /// 적의 시야에서 플레이어를 찾을 것
+        ///</summary>
         private void FindTargets()
         {
-            if (!mBoolStalk && mIntPatrolMax > 0)
-            {
-                mover.Move(mListPatrol[mIntPatrolCounter]);
-            }
-
             Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
             for (int i = 0; i < targetInViewRadius.Length; i++)
@@ -118,32 +135,48 @@ namespace TinyDragon.Enemy
 
                     if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask))
                     {
-                        visibleTargets.Add(target);
-
-                        if (!mBoolJumping && !mBoolStalk)
-                        {
-                            mover.Stop();
-                            mover.Jump();
-                            mBoolJumping = true;
-                        }
-                        else if (mBoolStalk)
-                        {
-                            if (Vector3.Distance(transform.position, target.transform.position) < 5f) //remainingDistancePermalink로 수정할것.
-                            {
-                                mover.Stop();
-                                attacker.Attack(mBoolJumping, EnemyAnimator);
-                            }
-                            else
-                            {
-                                mover.Move(target);
-                            }
-                        }
+                        InteractPlayer(target);
                         return;
-
                     }
                 }
             }
-            mBoolStalk = false;
+
+        }
+
+        ///<summary>
+        /// 적이 순찰하는 처리
+        ///</summary>
+        private void Patrol()
+        {
+            if (!mBoolStalk && !mBoolJumping && mIntPatrolMax > 0)
+            {
+                mover.Move(mListPatrol[mIntPatrolCounter]);
+            }
+        }
+
+        ///<summary>
+        /// 플레이어에게 반응하는 처리
+        ///</summary>
+        private void InteractPlayer(Transform target)
+        {
+            if (!mBoolJumping && !mBoolStalk)
+            {
+                mover.Stop();
+                mover.Jump();
+                mBoolJumping = true;
+            }
+            else if (mBoolStalk)
+            {
+                if (Vector3.Distance(target.position, transform.position) <= attacker.Distance)
+                {
+                    mover.Stop();
+                    attacker.Attack(mBoolJumping, enemyAnimator);
+                }
+                else
+                {
+                    mover.Move(target);
+                }
+            }
         }
 
         private void OnTriggerEnter(Collider other)

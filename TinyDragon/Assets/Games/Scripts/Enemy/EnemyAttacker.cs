@@ -18,11 +18,23 @@ namespace TinyDragon.Enemy
 
         private Animator enemyAnimator;
 
+
+        [Tooltip("사정거리")]
+        [SerializeField] public float attackDistance = 2f;
+
         public Animator Animator
         {
             set
             {
                 enemyAnimator = value;
+            }
+        }
+
+        public float Distance
+        {
+            get
+            {
+                return attackDistance;
             }
         }
 
