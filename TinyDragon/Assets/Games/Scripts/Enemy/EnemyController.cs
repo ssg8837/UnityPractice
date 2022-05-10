@@ -42,6 +42,7 @@ namespace TinyDragon.Enemy
         ///</summary>
         private int mIntPatrolCounter;
 
+
         ///<summary>
         ///지금 점핑중인가?
         ///</summary>
@@ -57,12 +58,41 @@ namespace TinyDragon.Enemy
         ///</summary>
         private bool mBoolPatrolReverse = false;
 
+        ///<summary>
+        ///플레이어의 위치 이동을 기억하기 시작한 타이머
+        ///</summary>
+        private float mFloatRemberTime = 0;
+
+
+        ///<summary>
+        ///플레이어가 어디 있는지 찾는 걸 시작한 타이머
+        ///</summary>
+        private float mFloatFindTime = 0;
+
+        ///<summary>
+        ///플레이어의 위치 이동을 기억하는 가?
+        ///</summary>
+        private bool mRemember = false;
+
+        ///<summary>
+        ///플레이어가 어디 있는지 찾는 중인 가?
+        ///</summary>
+        private bool mFind = false;
+
+        private Vector3 playerLastPosition;
+
+        ///<summary>
+        ///코루틴 실행 주기
+        ///</summary>
+        private float mCoroutineInterval = .5f;
 
         private Animator enemyAnimator;
         private EnemyMover mover;
         private EnemyAttacker attacker;
 
         private NavMeshAgent enemyNavMeshAgent;
+
+        private Vector3 randomVector;
 
 
         private void Start()
@@ -87,7 +117,7 @@ namespace TinyDragon.Enemy
 
             mIntPatrolMax = mListPatrol.Count;
 
-            StartCoroutine("SearchAndAttack", .5f); //순찰 중(생략 가능)에 플레이어를 찾을 경우 쫓아가서 공격 코루틴
+            StartCoroutine(SearchAndAttack(mCoroutineInterval)); //순찰 중(생략 가능)에 플레이어를 찾을 경우 쫓아가서 공격 코루틴
         }
 
 
@@ -96,21 +126,47 @@ namespace TinyDragon.Enemy
         ///</summary>
         IEnumerator SearchAndAttack(float delay)
         {
+            bool boolPlayerInEnemySight;
             while (true)
             {
                 yield return new WaitForSeconds(delay);
 
                 Patrol();
-                FindTargets();
+                boolPlayerInEnemySight = FindTargets();
                 if (mBoolStalk)
                 {
-                    //TODO :: INTERVAL 이용해서 플레이어에게 회전(일정 시간)
+                    if (!boolPlayerInEnemySight)
+                    {
+                        //INTERVAL 이용해서 플레이어에게 회전(일정 시간)
+                        if (IntervalCheckForEnemy(ref mFloatRemberTime, mover.RememberTime, mRemember))
+                        {
+                            if (mFloatRemberTime == mCoroutineInterval)
+                            {
+                                playerLastPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+                            }
+                            //TODO :: INTERVAL 이용해서 플레이어에게 회전(일정 시간)
+                            mover.Rotate(playerLastPosition, mFloatRemberTime, mCoroutineInterval, 0);
+                        }
+                        //일정시간 + X초간(회전 이후 X초), 랜덤한 방향으로 회전
+                        else if (IntervalCheckForEnemy(ref mFloatFindTime, mover.FindTime, mFind))
+                        {
+                            if (mFloatFindTime == mCoroutineInterval)
+                            {
+                                randomVector = transform.position;
+                                randomVector.x += Random.Range(-1, 1);
+                                randomVector.z += Random.Range(-1, 1);
+                            }
+                            //랜덤한 방향으로 회전 
+                            mover.Rotate(randomVector, mFloatFindTime, mCoroutineInterval, 1);
+                        }
+                        //TODO :: 일정 시간 지나면 추적 플래그 종료 후 순찰로 돌아감,
+                        else
+                        {
+                            Debug.Log("추적 플래그 종료 ");
+                            mBoolStalk = false;
+                        }
 
-                    //TODO :: 일정시간 + 3초간(회전 이후 3초), 랜덤한 방향으로 회전 
-
-                    //TODO :: 일정 시간 지나면 추적 플래그 종료 후 순찰로 돌아감,
-
-                    mBoolStalk = false;
+                    }
                 }
                 mover.UpdateMoveMotion();
             }
@@ -119,7 +175,7 @@ namespace TinyDragon.Enemy
         ///<summary>
         /// 적의 시야에서 플레이어를 찾을 것
         ///</summary>
-        private void FindTargets()
+        private bool FindTargets()
         {
             Collider[] targetInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
@@ -136,10 +192,11 @@ namespace TinyDragon.Enemy
                     if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, targetMask))
                     {
                         InteractPlayer(target);
-                        return;
+                        return true;
                     }
                 }
             }
+            return false;
 
         }
 
@@ -177,6 +234,10 @@ namespace TinyDragon.Enemy
                     mover.Move(target);
                 }
             }
+            mFloatRemberTime = 0;
+            mFloatFindTime = 0;
+            mRemember = true;
+            mFind = true;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -215,6 +276,21 @@ namespace TinyDragon.Enemy
         {
             mBoolJumping = false;
             mBoolStalk = true;
+        }
+
+
+        private bool IntervalCheckForEnemy(ref float timeChecker, float interval, bool waitFlg)
+        {
+            if (waitFlg)
+            {
+                timeChecker += mCoroutineInterval;
+                if (timeChecker >= interval)
+                {
+                    waitFlg = false;
+                }
+            }
+
+            return waitFlg;
         }
 
     }

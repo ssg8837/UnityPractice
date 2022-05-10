@@ -23,8 +23,18 @@ namespace TinyDragon.Enemy
         ///적의 점프 정도
         ///</summary>
         [Tooltip("적의 점프 정도")]
-        [SerializeField] public float jumpPower = 50f;
+        [SerializeField] private float jumpPower = 50f;
 
+        [SerializeField] private float findPlayerTime = 5f;
+
+        [SerializeField] private float remmberPlayerTime = 1f;
+
+
+        ///<summary>
+        ///회전을 얼마나 몇 초 간격으로 시킬것인가?
+        ///</summary>
+        [Tooltip("회전을 얼마나 몇 초 간격으로 시킬것인가?")]
+        [SerializeField] private float rotationDelay = 0.05f;
 
         private Rigidbody EnemyRigidbody;
         private Animator EnemyAnimator;
@@ -55,6 +65,22 @@ namespace TinyDragon.Enemy
             }
         }
 
+        public float FindTime
+        {
+            get
+            {
+                return findPlayerTime;
+            }
+        }
+
+        public float RememberTime
+        {
+            get
+            {
+                return remmberPlayerTime;
+            }
+        }
+
         public void Jump()
         {
             EnemyAnimator.SetTrigger("Jump");
@@ -77,8 +103,35 @@ namespace TinyDragon.Enemy
         ///<summary>
         ///플레이어에 맞춰 회전
         ///</summary>
-        public void Rotate(Vector3 velocity)
+        public void Rotate(Vector3 velocity, float targetTime, float controllerInterval, int intFlg)
         {
+            Vector3 dir = velocity - transform.position;
+
+            if (velocity == transform.position)
+            {
+                dir = transform.TransformDirection(Vector3.forward);
+            }
+
+            float rotateTimer = 0f;
+            switch (intFlg)
+            {
+                case 0:
+                    rotateTimer = remmberPlayerTime;
+                    break;
+                case 1:
+                    rotateTimer = findPlayerTime;
+                    break;
+            }
+            StartCoroutine(RotateCorutine(dir, targetTime - controllerInterval, controllerInterval, rotateTimer));
+        }
+
+        IEnumerator RotateCorutine(Vector3 dir, float oldTargetTime, float coroutineInterval, float rotateTimer)
+        {
+            for (float i = 0; i < coroutineInterval; i += rotationDelay)
+            {
+                yield return new WaitForSeconds(rotationDelay);
+                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), coroutineInterval / rotateTimer);
+            }
         }
 
         public void Stop()
