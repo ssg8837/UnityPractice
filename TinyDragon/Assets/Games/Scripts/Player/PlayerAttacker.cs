@@ -45,6 +45,14 @@ namespace TinyDragon.Player
         ///</summary>
         private uint mMeleeComboStage = 0;
 
+        [Tooltip("공격 이펙트")]
+        [SerializeField]
+        private ParticleSystem[] playerAttackParticle;
+
+
+        [Tooltip("공격 이펙트")]
+        [SerializeField]
+        private GameObject[] playerAttackChecker;
 
         public float jumpPower = 50f;
         public bool Attack(bool mJumping, Animator animator)
@@ -69,17 +77,34 @@ namespace TinyDragon.Player
 
         public bool PlayerMeleeAttack(int aComboAttack, Animator animator)
         {
-            switch (aComboAttack)
+            mAttackWait = false;
+            ParticleSystem particle = playerAttackParticle[aComboAttack - 1];
+            playerAttackChecker[aComboAttack - 1].SetActive(true);
+            if (!particle.isPlaying)
             {
-                case 3:
-                    animator.ResetTrigger("Attack");
-                    mAttackWait = true;
-                    mAttackWaitTimer = 0;
-                    return true;
-                default:
-                    break;
+                particle.Play();
+                switch (aComboAttack)
+                {
+                    case 3:
+                        mAttackWaitTimer = 0;
+                        mAttackWait = true;
+                        break;
+                    default:
+                        break;
+                }
             }
-            return false;
+            return mAttackWait;
+        }
+
+        public void StopAttackParticle(int aComboAttack)
+        {
+            ParticleSystem particle = playerAttackParticle[aComboAttack - 1];
+            if (particle.isPlaying)
+            {
+                particle.Stop();
+            }
+
+            playerAttackChecker[aComboAttack - 1].SetActive(false);
         }
 
         public float getInterval()

@@ -8,12 +8,12 @@ namespace TinyDragon.Player
 {
     public class PlayerController : MonoBehaviour
     {
-        
+
         ///<summary>
         ///플레이어 리지드 바디
         ///</summary>
         private Rigidbody playerRigidbody;
-        
+
         private Animator playerAnimator;
 
         private PlayerMover mover;
@@ -47,6 +47,7 @@ namespace TinyDragon.Player
 
         private bool mBoolWaitDodgeFlg = false;
         private bool mBoolWaitAttackFlg = false;
+        private bool mBoolAttackingFlg = false;
 
         void Start()
         {
@@ -56,7 +57,7 @@ namespace TinyDragon.Player
             mover = GetComponent<PlayerMover>();
             attacker = GetComponent<PlayerAttacker>();
             dodger = GetComponent<PlayerDodger>();
-            
+
             mover.Rigidbody = playerRigidbody;
             attacker.Rigidbody = playerRigidbody;
             dodger.Rigidbody = playerRigidbody;
@@ -71,8 +72,8 @@ namespace TinyDragon.Player
             float inputDodge = Input.GetAxisRaw("Dodge");
             float inputAttack = Input.GetAxisRaw("Attack");
 
-            inputDodge = IntervalCheck(inputDodge , ref mDodgeWaitTimer, dodger.getInterval(), ref mBoolWaitDodgeFlg);
-            inputAttack = IntervalCheck(inputAttack , ref mAttackWaitTimer, attacker.getInterval(), ref mBoolWaitAttackFlg);
+            inputDodge = IntervalCheck(inputDodge, ref mDodgeWaitTimer, dodger.getInterval(), ref mBoolWaitDodgeFlg);
+            inputAttack = IntervalCheck(inputAttack, ref mAttackWaitTimer, attacker.getInterval(), ref mBoolWaitAttackFlg);
 
             if (mBoolDodging) { }                  //TODO: 회피중 조작 처리(미정)
             else                            //회피중이 아닐 때 처리(평시 처리)
@@ -80,23 +81,26 @@ namespace TinyDragon.Player
                 if (!mBoolJumping && inputDodge == Constants.INPUT_ON)    //점프중이 아닐때 닷지키가 눌림.
                 {
                     mBoolDodging = dodger.Dodge(inputX, inputZ, playerAnimator);
-                    if(mBoolDodging)
+                    if (mBoolDodging)
                     {
                         mBoolWaitDodgeFlg = mBoolDodging;
                         mDodgeWaitTimer = 0;
                     }
                 }
-                else if (inputAttack == Constants.INPUT_ON)
+                else if (!mBoolAttackingFlg)
                 {
-                    attacker.Attack(mBoolJumping, playerAnimator);
-                }
-                else
-                {
-                    mover.Move(inputX, inputZ, playerAnimator);
-
-                    if (!mBoolJumping)
+                    if (inputAttack == Constants.INPUT_ON)
                     {
-                        mBoolJumping = mover.Jump(playerAnimator);
+                        mBoolAttackingFlg = attacker.Attack(mBoolJumping, playerAnimator);
+                    }
+                    else
+                    {
+                        mover.Move(inputX, inputZ, playerAnimator);
+
+                        if (!mBoolJumping)
+                        {
+                            mBoolJumping = mover.Jump(playerAnimator);
+                        }
                     }
                 }
 
@@ -110,7 +114,6 @@ namespace TinyDragon.Player
                 timeChecker += Time.deltaTime;
                 if (timeChecker >= interval)
                 {
-                    Debug.Log(timeChecker);
                     waitFlg = false;
                 }
                 else
@@ -122,7 +125,7 @@ namespace TinyDragon.Player
             return input;
         }
 
-        
+
         public void InitJumping()
         {
             mBoolJumping = false;
@@ -135,9 +138,16 @@ namespace TinyDragon.Player
 
         private void MeleeAttack(int aComboAttack)
         {
-           mBoolWaitAttackFlg = attacker.PlayerMeleeAttack(aComboAttack, playerAnimator);
-           mAttackWaitTimer = 0;
+            mBoolWaitAttackFlg = attacker.PlayerMeleeAttack(aComboAttack, playerAnimator);
+            mAttackWaitTimer = 0;
         }
-        
+
+        private void StopAttack(int aComboAttack)
+        {
+            playerAnimator.ResetTrigger("Attack");  //선입력 제거
+            attacker.StopAttackParticle(aComboAttack);
+            mBoolAttackingFlg = false;
+        }
+
     }
 }

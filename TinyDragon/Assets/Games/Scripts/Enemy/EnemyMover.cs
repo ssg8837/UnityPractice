@@ -17,7 +17,7 @@ namespace TinyDragon.Enemy
         ///적의 스피드
         ///</summary>
         [Tooltip("적의 스피드")]
-        [SerializeField] private float speed = 5f;
+        [SerializeField] private float speed = 3.5f;
 
         ///<summary>
         ///적의 점프 정도
@@ -93,6 +93,7 @@ namespace TinyDragon.Enemy
         {
             navMesh.destination = transform.position;
             navMesh.isStopped = false;
+            navMesh.speed = speed;
         }
 
         public void UpdateMoveMotion()
@@ -105,13 +106,12 @@ namespace TinyDragon.Enemy
         ///</summary>
         public void Rotate(Vector3 velocity, float targetTime, float controllerInterval, int intFlg)
         {
-            Vector3 dir = velocity - transform.position;
-
-            if (velocity == transform.position)
+            if (velocity == Vector3.zero)
             {
-                dir = transform.TransformDirection(Vector3.forward);
+                velocity = transform.TransformDirection(Vector3.forward);
             }
 
+            navMesh.speed = 2f;
             float rotateTimer = 0f;
             switch (intFlg)
             {
@@ -122,7 +122,7 @@ namespace TinyDragon.Enemy
                     rotateTimer = findPlayerTime;
                     break;
             }
-            StartCoroutine(RotateCorutine(dir, targetTime - controllerInterval, controllerInterval, rotateTimer));
+            StartCoroutine(RotateCorutine(velocity, targetTime - controllerInterval, controllerInterval, rotateTimer));
         }
 
         IEnumerator RotateCorutine(Vector3 dir, float oldTargetTime, float coroutineInterval, float rotateTimer)
@@ -130,7 +130,7 @@ namespace TinyDragon.Enemy
             for (float i = 0; i < coroutineInterval; i += rotationDelay)
             {
                 yield return new WaitForSeconds(rotationDelay);
-                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), coroutineInterval / rotateTimer);
+                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(dir), rotationDelay);
             }
         }
 

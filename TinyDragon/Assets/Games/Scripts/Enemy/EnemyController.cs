@@ -79,7 +79,7 @@ namespace TinyDragon.Enemy
         ///</summary>
         private bool mFind = false;
 
-        private Vector3 playerLastPosition;
+        private Vector3 lastPosVector;
 
         ///<summary>
         ///코루틴 실행 주기
@@ -94,6 +94,12 @@ namespace TinyDragon.Enemy
 
         private Vector3 randomVector;
 
+        /// <summary>
+        ///피격 이펙트 색 변경 플래그
+        /// </summary>
+        private int mIntDamagedFlg;
+
+        private Renderer[] renderers;
 
         private void Start()
         {
@@ -117,6 +123,10 @@ namespace TinyDragon.Enemy
 
             mIntPatrolMax = mListPatrol.Count;
 
+            mIntDamagedFlg = 0;
+
+            renderers = transform.GetComponentsInChildren<Renderer>();
+
             StartCoroutine(SearchAndAttack(mCoroutineInterval)); //순찰 중(생략 가능)에 플레이어를 찾을 경우 쫓아가서 공격 코루틴
         }
 
@@ -131,6 +141,18 @@ namespace TinyDragon.Enemy
             {
                 yield return new WaitForSeconds(delay);
 
+                foreach (Renderer re in renderers)
+                {
+
+                    if (mIntDamagedFlg > 0)
+                    {
+                        re.material.color = Color.red;
+                    }
+                    else
+                    {
+                        re.material.color = Color.white;
+                    }
+                }
                 Patrol();
                 boolPlayerInEnemySight = FindTargets();
                 if (mBoolStalk)
@@ -142,17 +164,17 @@ namespace TinyDragon.Enemy
                         {
                             if (mFloatRemberTime == mCoroutineInterval)
                             {
-                                playerLastPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
+                                lastPosVector = GameObject.FindGameObjectWithTag("Player").transform.position - transform.position;
                             }
                             //TODO :: INTERVAL 이용해서 플레이어에게 회전(일정 시간)
-                            mover.Rotate(playerLastPosition, mFloatRemberTime, mCoroutineInterval, 0);
+                            mover.Rotate(lastPosVector, mFloatRemberTime, mCoroutineInterval, 0);
                         }
                         //일정시간 + X초간(회전 이후 X초), 랜덤한 방향으로 회전
                         else if (IntervalCheckForEnemy(ref mFloatFindTime, mover.FindTime, mFind))
                         {
                             if (mFloatFindTime == mCoroutineInterval)
                             {
-                                randomVector = transform.position;
+                                randomVector = Vector3.zero;
                                 randomVector.x += Random.Range(-1, 1);
                                 randomVector.z += Random.Range(-1, 1);
                             }
@@ -291,6 +313,23 @@ namespace TinyDragon.Enemy
             }
 
             return waitFlg;
+        }
+
+        public void Attacked(float damage, float velocitypower, Vector3 velocity)
+        {
+            Debug.Log("ATTacked : " + damage);
+            enemyAnimator.SetTrigger("Damage");
+
+            StartCoroutine("damagedColor");
+        }
+
+        IEnumerator damagedColor()
+        {
+            mIntDamagedFlg++;
+
+            yield return new WaitForSeconds(1f);
+
+            mIntDamagedFlg--;
         }
 
     }

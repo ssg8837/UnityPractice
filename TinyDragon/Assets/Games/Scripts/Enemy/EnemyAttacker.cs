@@ -83,6 +83,7 @@ namespace TinyDragon.Enemy
         private void EnemyAttack()
         {
             enemyAnimator.SetInteger("AttackAnim", 0);
+            
         }
     }
 }
