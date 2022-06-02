@@ -317,7 +317,6 @@ namespace TinyDragon.Enemy
 
         public void Attacked(float damage, float velocitypower, Vector3 velocity)
         {
-            Debug.Log("ATTacked : " + damage);
             enemyAnimator.SetTrigger("Damage");
 
             StartCoroutine("damagedColor");

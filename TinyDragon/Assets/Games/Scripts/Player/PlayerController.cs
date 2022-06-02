@@ -45,6 +45,11 @@ namespace TinyDragon.Player
         ///</summary>
         private float mAttackWaitTimer = 0;
 
+        /// <summary>
+        ///피격 이펙트 색 변경 플래그
+        /// </summary>
+        private int mIntDamagedFlg;
+
         private bool mBoolWaitDodgeFlg = false;
         private bool mBoolWaitAttackFlg = false;
         private bool mBoolAttackingFlg = false;
@@ -149,5 +154,27 @@ namespace TinyDragon.Player
             mBoolAttackingFlg = false;
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("EnemyWeapon"))
+            {
+                Attacked(5, 1, Vector3.zero);
+            }
+        }
+        public void Attacked(float damage, float velocitypower, Vector3 velocity)
+        {
+            playerAnimator.SetTrigger("Damage");
+
+            StartCoroutine("damagedColor");
+        }
+
+        IEnumerator damagedColor()
+        {
+            mIntDamagedFlg++;
+
+            yield return new WaitForSeconds(1f);
+
+            mIntDamagedFlg--;
+        }
     }
 }
