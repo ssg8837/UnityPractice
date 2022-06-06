@@ -96,15 +96,19 @@ namespace TinyDragon.Player
             return mAttackWait;
         }
 
-        public void StopAttackParticle(int aComboAttack)
+        public void StopAttackParticle()
         {
-            ParticleSystem particle = playerAttackParticle[aComboAttack - 1];
-            if (particle.isPlaying)
+            foreach (ParticleSystem particle in playerAttackParticle)
             {
-                particle.Stop();
+                if (particle.isPlaying)
+                {
+                    particle.Stop();
+                }
             }
-
-            playerAttackChecker[aComboAttack - 1].SetActive(false);
+            foreach (GameObject attackChecker in playerAttackChecker)
+            {
+                attackChecker.SetActive(false);
+            }
         }
 
         public float getInterval()

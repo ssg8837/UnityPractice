@@ -264,7 +264,11 @@ namespace TinyDragon.Enemy
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.transform.Equals(mListPatrol[mIntPatrolCounter]))
+            if (other.gameObject.CompareTag("PlayerWeapon"))
+            {
+                Attacked(5, 1, Vector3.zero);
+            }
+            else if (other.gameObject.transform.Equals(mListPatrol[mIntPatrolCounter]))
             {
                 if (mBoolPatrolReverse)
                 {

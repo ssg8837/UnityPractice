@@ -147,17 +147,29 @@ namespace TinyDragon.Player
             mAttackWaitTimer = 0;
         }
 
-        private void StopAttack(int aComboAttack)
+        public void StopAttack()
         {
+        }
+
+        public void willResetAttackingFlg()
+        {
+            StartCoroutine("resetAttackingFlg");
+        }
+        IEnumerator resetAttackingFlg()
+        {
+            yield return new WaitForSeconds(.6f);
+
             playerAnimator.ResetTrigger("Attack");  //선입력 제거
-            attacker.StopAttackParticle(aComboAttack);
             mBoolAttackingFlg = false;
+            attacker.StopAttackParticle();
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("EnemyWeapon"))
             {
+                StopAttack();
+                InitDodging();
                 Attacked(5, 1, Vector3.zero);
             }
         }
