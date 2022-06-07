@@ -147,10 +147,6 @@ namespace TinyDragon.Player
             mAttackWaitTimer = 0;
         }
 
-        public void StopAttack()
-        {
-        }
-
         public void willResetAttackingFlg()
         {
             StartCoroutine("resetAttackingFlg");
@@ -159,6 +155,11 @@ namespace TinyDragon.Player
         {
             yield return new WaitForSeconds(.6f);
 
+            StopAttack();
+        }
+
+        private void StopAttack()
+        {
             playerAnimator.ResetTrigger("Attack");  //선입력 제거
             mBoolAttackingFlg = false;
             attacker.StopAttackParticle();
