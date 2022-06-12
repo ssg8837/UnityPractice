@@ -26,12 +26,15 @@ namespace TinyDragon.Enemy
         [Tooltip("순찰 플래그")]
         [SerializeField] private bool mBoolPatrol = false;
 
+
         ///<summary>
         ///순찰 지점 리스트
         ///</summary>
         [Tooltip("순찰 지점 리스트")]
         [SerializeField] private List<Transform> mListPatrol;
 
+        [Tooltip("피격 사운드")]
+        [SerializeField] private AudioSource enemyDamagedSound;
 
         ///<summary>
         ///순찰 지점 최댓수
@@ -63,6 +66,10 @@ namespace TinyDragon.Enemy
         ///</summary>
         private float mFloatRemberTime = 0;
 
+        ///<summary>
+        ///공격 중 플래그
+        ///</summary>
+        private bool mBoolAttackingFlg = false;
 
         ///<summary>
         ///플레이어가 어디 있는지 찾는 걸 시작한 타이머
@@ -246,10 +253,12 @@ namespace TinyDragon.Enemy
             }
             else if (mBoolStalk)
             {
-                if (Vector3.Distance(target.position, transform.position) <= attacker.Distance)
+                if (Vector3.Distance(target.position, transform.position) <= attacker.Distance &&
+                    !mBoolAttackingFlg)
                 {
                     mover.Stop();
                     attacker.Attack(mBoolJumping, enemyAnimator);
+                    mBoolAttackingFlg = true;
                 }
                 else
                 {
@@ -329,10 +338,14 @@ namespace TinyDragon.Enemy
         IEnumerator damagedColor()
         {
             mIntDamagedFlg++;
-
+            enemyDamagedSound.Play();
             yield return new WaitForSeconds(1f);
 
             mIntDamagedFlg--;
+        }
+        public void willResetAttackingFlg()
+        {
+            mBoolAttackingFlg = false;
         }
 
     }

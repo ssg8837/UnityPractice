@@ -33,7 +33,7 @@ namespace TinyDragon.Player
         ///<summary>
         ///공격 중 플래그
         ///</summary>
-        private bool mBoolAttacking = false;
+        private bool mBoolAttackingFlg = false;
 
         ///<summary>
         ///닷지 후 닷지불가 타이머
@@ -52,7 +52,6 @@ namespace TinyDragon.Player
 
         private bool mBoolWaitDodgeFlg = false;
         private bool mBoolWaitAttackFlg = false;
-        private bool mBoolAttackingFlg = false;
 
         void Start()
         {

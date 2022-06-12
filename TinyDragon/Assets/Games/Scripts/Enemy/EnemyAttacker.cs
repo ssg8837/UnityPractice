@@ -22,6 +22,9 @@ namespace TinyDragon.Enemy
         [Tooltip("사정거리")]
         [SerializeField] public float attackDistance = 2f;
 
+        [Tooltip("공격 사운드")]
+        [SerializeField] private AudioSource enemyAttackSound;
+
         public Animator Animator
         {
             set
@@ -68,6 +71,7 @@ namespace TinyDragon.Enemy
                 // Vector3 velocity = transform.TransformDirection(Vector3.forward);
                 // velocity *= 2;
                 animator.SetInteger("AttackAnim", Random.Range(1, 4));
+                enemyAttackSound.Play();
 
                 return true;
 
