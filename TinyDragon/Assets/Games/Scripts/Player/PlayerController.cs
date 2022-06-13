@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TinyDragon.Core;
 using TinyDragon.Player;
+using System;
 
 namespace TinyDragon.Player
 {
@@ -52,6 +53,8 @@ namespace TinyDragon.Player
 
         private bool mBoolWaitDodgeFlg = false;
         private bool mBoolWaitAttackFlg = false;
+        [SerializeField]
+        private GameObject hitEffectPrefab;
 
         void Start()
         {
@@ -169,10 +172,18 @@ namespace TinyDragon.Player
             if (other.gameObject.CompareTag("EnemyWeapon"))
             {
                 StopAttack();
+                PlayDamagedParticle(other.transform);
                 InitDodging();
                 Attacked(5, 1, Vector3.zero);
             }
         }
+
+        private void PlayDamagedParticle(Transform transform)
+        {
+            GameObject clone = Instantiate(hitEffectPrefab, transform.position, transform.rotation);
+            Destroy(clone, 2f);
+        }
+
         public void Attacked(float damage, float velocitypower, Vector3 velocity)
         {
             playerAnimator.SetTrigger("Damage");
