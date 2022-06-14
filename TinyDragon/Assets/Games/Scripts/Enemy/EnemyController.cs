@@ -108,6 +108,9 @@ namespace TinyDragon.Enemy
 
         private Renderer[] renderers;
 
+        [SerializeField]
+        private MeshCollider meleeMeshCollider;
+
         private void Start()
         {
             enemyAnimator = GetComponent<Animator>();
@@ -259,6 +262,7 @@ namespace TinyDragon.Enemy
                     mover.Stop();
                     attacker.Attack(mBoolJumping, enemyAnimator);
                     mBoolAttackingFlg = true;
+                    meleeMeshCollider.enabled = true;
                 }
                 else
                 {
@@ -346,6 +350,7 @@ namespace TinyDragon.Enemy
         public void willResetAttackingFlg()
         {
             mBoolAttackingFlg = false;
+            meleeMeshCollider.enabled = false;
         }
 
     }

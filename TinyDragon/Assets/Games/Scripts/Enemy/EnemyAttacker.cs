@@ -70,8 +70,7 @@ namespace TinyDragon.Enemy
             {
                 // Vector3 velocity = transform.TransformDirection(Vector3.forward);
                 // velocity *= 2;
-                animator.SetInteger("AttackAnim", Random.Range(1, 4));
-                enemyAttackSound.Play();
+                enemyAnimator.SetInteger("AttackAnim", Random.Range(1, 4));
 
                 return true;
 
@@ -86,8 +85,8 @@ namespace TinyDragon.Enemy
 
         private void EnemyAttack()
         {
+            enemyAttackSound.Play();
             enemyAnimator.SetInteger("AttackAnim", 0);
-            
         }
     }
 }
