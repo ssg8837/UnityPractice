@@ -262,7 +262,8 @@ namespace TinyDragon.Enemy
                     mover.Stop();
                     attacker.Attack(mBoolJumping, enemyAnimator);
                     mBoolAttackingFlg = true;
-                    meleeMeshCollider.enabled = true;
+                    if(meleeMeshCollider != null)
+                        meleeMeshCollider.enabled = true;
                 }
                 else
                 {
@@ -342,7 +343,8 @@ namespace TinyDragon.Enemy
         IEnumerator damagedColor()
         {
             mIntDamagedFlg++;
-            enemyDamagedSound.Play();
+            if(enemyDamagedSound != null)
+                enemyDamagedSound.Play();
             yield return new WaitForSeconds(1f);
 
             mIntDamagedFlg--;
@@ -350,7 +352,8 @@ namespace TinyDragon.Enemy
         public void willResetAttackingFlg()
         {
             mBoolAttackingFlg = false;
-            meleeMeshCollider.enabled = false;
+            if (meleeMeshCollider != null)
+                meleeMeshCollider.enabled = false;
         }
 
     }
