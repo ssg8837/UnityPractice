@@ -22,8 +22,8 @@ namespace TinyDragon.Enemy
         ///<summary>
         ///적의 점프 정도
         ///</summary>
-        [Tooltip("적의 점프 정도")]
-        [SerializeField] private float jumpPower = 50f;
+        //[Tooltip("적의 점프 정도")]
+        //[SerializeField] private float jumpPower = 50f;
 
         [SerializeField] private float findPlayerTime = 5f;
 

@@ -34,17 +34,6 @@ namespace TinyDragon.Player
         private bool mAttackWait = false;
 
 
-        ///<summary>
-        ///공격 후 공격불가 타이머
-        ///</summary>
-        private float mAttackWaitTimer = 0;
-
-
-        ///<summary>
-        ///현재 공격 중인 단계
-        ///</summary>
-        private uint mMeleeComboStage = 0;
-
         [Tooltip("공격 이펙트")]
         [SerializeField]
         private ParticleSystem[] playerAttackParticle;
@@ -93,7 +82,6 @@ namespace TinyDragon.Player
                 switch (aComboAttack)
                 {
                     case 3:
-                        mAttackWaitTimer = 0;
                         mAttackWait = true;
                         break;
                     default:

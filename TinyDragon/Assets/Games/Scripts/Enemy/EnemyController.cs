@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using TinyDragon.Core;
 using TinyDragon.Enemy;
+using TinyDragon.Weapon;
 
 namespace TinyDragon.Enemy
 {
@@ -23,8 +24,8 @@ namespace TinyDragon.Enemy
         ///<summary>
         ///순찰 플래그
         ///</summary>
-        [Tooltip("순찰 플래그")]
-        [SerializeField] private bool mBoolPatrol = false;
+        //[Tooltip("순찰 플래그")]
+        //[SerializeField] private bool mBoolPatrol = false;
 
 
         ///<summary>
@@ -96,6 +97,7 @@ namespace TinyDragon.Enemy
         private Animator enemyAnimator;
         private EnemyMover mover;
         private EnemyAttacker attacker;
+        private Rigidbody rigidBody;
 
         private NavMeshAgent enemyNavMeshAgent;
 
@@ -109,10 +111,14 @@ namespace TinyDragon.Enemy
         private Renderer[] renderers;
 
         [SerializeField]
-        private MeshCollider meleeMeshCollider;
+        private Collider meleeCollider;
+
+        private Health enemyHealth;
 
         private void Start()
         {
+            enemyHealth = GetComponent<Health>();
+
             enemyAnimator = GetComponent<Animator>();
 
             enemyNavMeshAgent = GetComponent<NavMeshAgent>();
@@ -128,6 +134,7 @@ namespace TinyDragon.Enemy
 
             attacker.Animator = enemyAnimator;
 
+            rigidBody = GetComponent<Rigidbody>();
 
             mIntPatrolCounter = 0;
 
@@ -262,8 +269,8 @@ namespace TinyDragon.Enemy
                     mover.Stop();
                     attacker.Attack(mBoolJumping, enemyAnimator);
                     mBoolAttackingFlg = true;
-                    if(meleeMeshCollider != null)
-                        meleeMeshCollider.enabled = true;
+                    if (meleeCollider != null)
+                        meleeCollider.enabled = true;
                 }
                 else
                 {
@@ -278,10 +285,12 @@ namespace TinyDragon.Enemy
 
         private void OnTriggerEnter(Collider other)
         {
+            //내 무기에 적이 닿았을 때
             if (other.gameObject.CompareTag("PlayerWeapon"))
             {
-                Attacked(5, 1, Vector3.zero);
+                AttackedByPlayer(other);
             }
+            // 패트롤 지점까지 이동 완료시
             else if (other.gameObject.transform.Equals(mListPatrol[mIntPatrolCounter]))
             {
                 if (mBoolPatrolReverse)
@@ -312,6 +321,26 @@ namespace TinyDragon.Enemy
             }
         }
 
+        /* 플레이어에게 공격 받았을 때 */
+        private void AttackedByPlayer(Collider other)
+        {
+            PlayerWeapon playerWeapon = other.gameObject.GetComponent<PlayerWeapon>();
+
+            StartCoroutine("pauseNavAgentInSec", playerWeapon.DelayTime);
+            if (playerWeapon != null)
+            {
+                Attacked(playerWeapon.Damage, playerWeapon.Velocity);
+            }
+            else
+            {
+                Debug.Log("무기값이 설정되어 있지 않습니다. : " + other.gameObject.name);
+
+                Attacked(5, Vector3.back);
+            }
+
+            enemyNavMeshAgent.isStopped = false;
+        }
+
         private void JumpingEnd()
         {
             mBoolJumping = false;
@@ -333,8 +362,13 @@ namespace TinyDragon.Enemy
             return waitFlg;
         }
 
-        public void Attacked(float damage, float velocitypower, Vector3 velocity)
+        public void Attacked(float damage, Vector3 velocity)
         {
+
+            enemyHealth.healthDamaged(damage);
+
+            rigidBody.AddRelativeForce(velocity);
+
             enemyAnimator.SetTrigger("Damage");
 
             StartCoroutine("damagedColor");
@@ -343,17 +377,24 @@ namespace TinyDragon.Enemy
         IEnumerator damagedColor()
         {
             mIntDamagedFlg++;
-            if(enemyDamagedSound != null)
+            if (enemyDamagedSound != null)
                 enemyDamagedSound.Play();
             yield return new WaitForSeconds(1f);
 
             mIntDamagedFlg--;
         }
+
+        IEnumerator pauseNavAgentInSec(float sec)
+        {
+            enemyNavMeshAgent.isStopped = true;
+            yield return new WaitForSeconds(sec);
+            enemyNavMeshAgent.isStopped = false;
+        }
         public void willResetAttackingFlg()
         {
             mBoolAttackingFlg = false;
-            if (meleeMeshCollider != null)
-                meleeMeshCollider.enabled = false;
+            if (meleeCollider != null)
+                meleeCollider.enabled = false;
         }
 
     }

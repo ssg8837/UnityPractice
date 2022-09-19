@@ -56,8 +56,12 @@ namespace TinyDragon.Player
         [SerializeField]
         private GameObject hitEffectPrefab;
 
+        private Health playerHealth;
+
         void Start()
         {
+            playerHealth = GetComponent<Health>();
+
             playerRigidbody = GetComponent<Rigidbody>();
             playerAnimator = GetComponent<Animator>();
 
@@ -174,7 +178,7 @@ namespace TinyDragon.Player
                 StopAttack();
                 PlayDamagedParticle(other.transform);
                 InitDodging();
-                Attacked(5, 1, Vector3.zero);
+                Attacked(5, Vector3.back);
             }
         }
 
@@ -184,7 +188,7 @@ namespace TinyDragon.Player
             Destroy(clone, 2f);
         }
 
-        public void Attacked(float damage, float velocitypower, Vector3 velocity)
+        public void Attacked(float damage, Vector3 velocity)
         {
             playerAnimator.SetTrigger("Damage");
 

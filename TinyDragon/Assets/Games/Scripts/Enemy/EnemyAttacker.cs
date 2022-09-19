@@ -41,24 +41,6 @@ namespace TinyDragon.Enemy
             }
         }
 
-        ///<summary>
-        ///공격 후 공격불가 플래그
-        ///</summary>
-        private bool mAttackWait = false;
-
-
-        ///<summary>
-        ///공격 후 공격불가 타이머
-        ///</summary>
-        private float mAttackWaitTimer = 0;
-
-
-        ///<summary>
-        ///현재 공격 중인 단계
-        ///</summary>
-        private uint mMeleeComboStage = 0;
-
-
         public float jumpPower = 50f;
         public bool Attack(bool mJumping, Animator animator)
         {
