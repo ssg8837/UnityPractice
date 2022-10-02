@@ -175,10 +175,25 @@ namespace TinyDragon.Player
         {
             if (other.gameObject.CompareTag("EnemyWeapon"))
             {
-                StopAttack();
-                PlayDamagedParticle(other.transform);
-                InitDodging();
-                Attacked(5, Vector3.back);
+                AttackByEnemy(other);
+            }
+        }
+
+        private void AttackByEnemy(Collider other)
+        {
+            Weapon enemyWeapon = other.gameObject.GetComponent<Weapon>();
+            StopAttack();
+            PlayDamagedParticle(other.transform);
+            InitDodging();
+            if (enemyWeapon != null)
+            {
+                Attacked(enemyWeapon.Damage, transform.position - other.transform.position, enemyWeapon.PushPower);
+            }
+            else
+            {
+                Debug.Log("무기값이 설정되어 있지 않습니다. : " + other.gameObject.name);
+
+                Attacked(5, -transform.forward, 1);
             }
         }
 
@@ -187,9 +202,15 @@ namespace TinyDragon.Player
             GameObject clone = Instantiate(hitEffectPrefab, transform.position, transform.rotation);
             Destroy(clone, 2f);
         }
-
-        public void Attacked(float damage, Vector3 velocity)
+        public void Attacked(float damage, Vector3 attackerPos, float power)
         {
+
+            playerHealth.healthDamaged(damage);
+
+            attackerPos.y = 0;
+
+            playerRigidbody.AddForce(attackerPos * power);  /* TODO:coroutine으로 밀어보자 */
+
             playerAnimator.SetTrigger("Damage");
 
             StartCoroutine("damagedColor");

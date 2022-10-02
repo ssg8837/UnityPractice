@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using TinyDragon.Core;
 using TinyDragon.Enemy;
-using TinyDragon.Weapon;
 
 namespace TinyDragon.Enemy
 {
@@ -324,18 +323,18 @@ namespace TinyDragon.Enemy
         /* 플레이어에게 공격 받았을 때 */
         private void AttackedByPlayer(Collider other)
         {
-            PlayerWeapon playerWeapon = other.gameObject.GetComponent<PlayerWeapon>();
+            Weapon playerWeapon = other.gameObject.GetComponent<Weapon>();
 
             StartCoroutine("pauseNavAgentInSec", playerWeapon.DelayTime);
             if (playerWeapon != null)
             {
-                Attacked(playerWeapon.Damage, playerWeapon.Velocity);
+                Attacked(playerWeapon.Damage, transform.position - other.transform.position, playerWeapon.PushPower);
             }
             else
             {
                 Debug.Log("무기값이 설정되어 있지 않습니다. : " + other.gameObject.name);
 
-                Attacked(5, Vector3.back);
+                Attacked(5, -transform.forward, 1);
             }
 
             enemyNavMeshAgent.isStopped = false;
@@ -362,12 +361,12 @@ namespace TinyDragon.Enemy
             return waitFlg;
         }
 
-        public void Attacked(float damage, Vector3 velocity)
+        public void Attacked(float damage, Vector3 attackerPos, float power)
         {
 
             enemyHealth.healthDamaged(damage);
 
-            rigidBody.AddRelativeForce(velocity);
+            rigidBody.AddForce(attackerPos * power);  /* TODO:coroutine으로 밀어보자 */
 
             enemyAnimator.SetTrigger("Damage");
 
