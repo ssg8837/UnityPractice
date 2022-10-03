@@ -209,7 +209,8 @@ namespace TinyDragon.Player
 
             attackerPos.y = 0;
 
-            playerRigidbody.AddForce(attackerPos * power);  /* TODO:coroutine으로 밀어보자 */
+            //playerRigidbody.AddForce(attackerPos * power);  /* TODO:coroutine으로 밀어보자 */
+            StartCoroutine("forcedByDamage", attackerPos.normalized * power);
 
             playerAnimator.SetTrigger("Damage");
 
@@ -224,5 +225,15 @@ namespace TinyDragon.Player
 
             mIntDamagedFlg--;
         }
+
+        IEnumerator forcedByDamage(Vector3 force)
+        {
+            for (int i = 0; i < 60; i++) {
+                yield return new WaitForSeconds(.01f);
+
+                playerRigidbody.AddForce(force);  /* TODO:coroutine으로 밀어보자 */
+            }
+        }
+
     }
 }

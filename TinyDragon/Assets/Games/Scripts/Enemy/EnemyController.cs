@@ -366,13 +366,23 @@ namespace TinyDragon.Enemy
 
             enemyHealth.healthDamaged(damage);
 
-            rigidBody.AddForce(attackerPos * power);  /* TODO:coroutine으로 밀어보자 */
+            attackerPos.y = 0;
+            //rigidBody.AddForce(attackerPos * power);  /* TODO:coroutine으로 밀어보자 */
+            StartCoroutine("forcedByDamage", attackerPos.normalized * power);
 
             enemyAnimator.SetTrigger("Damage");
 
             StartCoroutine("damagedColor");
         }
+        IEnumerator forcedByDamage(Vector3 force)
+        {
+            for (int i = 0; i < 60; i++)
+            {
+                yield return new WaitForSeconds(.01f);
 
+                rigidBody.AddForce(force);  /* TODO:coroutine으로 밀어보자 */
+            }
+        }
         IEnumerator damagedColor()
         {
             mIntDamagedFlg++;
