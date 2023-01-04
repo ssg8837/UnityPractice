@@ -13,10 +13,13 @@ namespace TinyDragon.Core
         private float maxHealth = 50f;
 
         private float currentHealth;
-        Health()
+        public Health()
         {
             currentHealth = maxHealth;
         }
+
+        public float MaxHealth { get => maxHealth; }
+        public float CurrentHealth { get => currentHealth; }
 
         public bool healthDamaged(float damage)
         {
