@@ -49,7 +49,7 @@ namespace TinyDragon.Core
 
             var localPos = Vector2.zero;
 
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(rectCanvas, screenPos, null, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(rectCanvas, screenPos, mainCamera, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
 
             rectHp.localPosition = localPos; // 체력바 위치조정
         }

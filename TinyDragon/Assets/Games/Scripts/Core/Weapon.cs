@@ -18,7 +18,7 @@ namespace TinyDragon.Core
         private float delayTime = .5f;
 
         [SerializeField]
-        private float pushPower = .5f;
+        private float pushPower = 100f;
 
         public float Damage { get => damage; set => damage = value; }
         //public Vector3 Velocity { get => velocity; set => velocity = value; }

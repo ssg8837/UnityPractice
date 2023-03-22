@@ -12,8 +12,10 @@ namespace TinyDragon.Enemy
     {
 
 
-        [Tooltip("연속공격 후딜")]
-        [SerializeField] public float attackInterval = 0.8f;
+        [Tooltip("공격 선딜")]
+        [SerializeField] public float delayBefore = 0.8f;
+        [Tooltip("공격 후딜")]
+        [SerializeField] public float delayAfter = 0.8f;
         private Rigidbody playerRigidbody;
 
         private Animator enemyAnimator;
@@ -52,6 +54,7 @@ namespace TinyDragon.Enemy
             {
                 // Vector3 velocity = transform.TransformDirection(Vector3.forward);
                 // velocity *= 2;
+                StartCoroutine(AttackDelay(delayBefore));
                 enemyAnimator.SetInteger("AttackAnim", Random.Range(1, 4));
 
                 return true;
@@ -60,15 +63,25 @@ namespace TinyDragon.Enemy
             return false;
         }
 
-        public float getInterval()
+        IEnumerator AttackDelay(float DelayTime)
         {
-            return attackInterval;
+            enemyAnimator.SetBool("Delay", true);
+            
+            yield return new WaitForSeconds(DelayTime); 
+
+            enemyAnimator.SetBool("Delay", false);
         }
 
-        private void EnemyAttack()
+        public void EnemyAttack()
         {
             enemyAttackSound.Play();
             enemyAnimator.SetInteger("AttackAnim", 0);
+            StartCoroutine(AttackDelay(delayAfter));
+        }
+
+        public float getInterval()
+        {
+            return delayBefore;
         }
     }
 }

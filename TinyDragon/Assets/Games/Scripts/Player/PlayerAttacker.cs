@@ -48,7 +48,6 @@ namespace TinyDragon.Player
         [SerializeField]
         private AudioSource[] playerAttackSound;
 
-        public float jumpPower = 50f;
         public bool Attack(bool mJumping, Animator animator)
         {
             if (mJumping)

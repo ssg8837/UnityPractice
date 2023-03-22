@@ -266,12 +266,11 @@ namespace TinyDragon.Enemy
                     !mBoolAttackingFlg)
                 {
                     mover.Stop();
-                    attacker.Attack(mBoolJumping, enemyAnimator);
                     mBoolAttackingFlg = true;
-                    if (meleeCollider != null)
-                        meleeCollider.enabled = true;
+                    attacker.Attack(mBoolJumping, enemyAnimator);
+
                 }
-                else
+                else if(!enemyAnimator.GetBool("Delay"))
                 {
                     mover.Move(target);
                 }
@@ -405,6 +404,14 @@ namespace TinyDragon.Enemy
             if (meleeCollider != null)
                 meleeCollider.enabled = false;
         }
+
+        public void OnAttackingFlg()
+        {
+            if (meleeCollider != null)
+                meleeCollider.enabled = true;
+            attacker.EnemyAttack();
+        }
+
 
     }
 }
